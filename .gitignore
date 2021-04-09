@@ -367,3 +367,6 @@ FodyWeavers.xsd
 # not the libraries folder
 !libraries/*
 .idea/
+
+# not the valheim path file
+Environment.props
