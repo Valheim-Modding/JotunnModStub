@@ -70,8 +70,8 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
-# Assemblies
-/[Aa]ssets/[Aa]ssemblies*
+# Assemblies (dont distribute!)
+/[Aa]ssets/[Aa]ssemblies/*.dll
 
 # AssetBundles (manual copy these)
 /[Aa]ssetBundles*
