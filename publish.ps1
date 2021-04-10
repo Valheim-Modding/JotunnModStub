@@ -10,7 +10,10 @@ param(
     [System.String]$TargetAssembly,
 
     [Parameter(Mandatory)]
-    [System.String]$ValheimPath
+    [System.String]$ValheimPath,
+
+    [Parameter(Mandatory)]
+    [System.String]$ProjectPath
 )
 
 # Make sure Get-Location is the script path
@@ -47,13 +50,24 @@ if ($Target.Equals("Debug")) {
     if (Test-Path -Path "$pdb") {
         Write-Host "Copy Debug files for plugin $asm"
         Copy-Item -Path "$pdb" -Destination "$plug" -Force
-        start "$(Get-Location)\libraries\Debug\pdb2mdb.exe" `"$plug\$TargetAssembly`"
+        start "$(Get-Location)\libraries\Debug\pdb2mdb.exe" `"$plug\$TargetAssembly`"\
     }
+}
+if($Target.Equals("Release")) {
+    Write-Host "Packaging for ThunderStore..."
+    $Package="Package"
+    $PackagePath=$ProjectPath+$Package
+
+    Write-Host "$PackagePath\$TargetAssembly"
+    Copy-Item -Path "$TargetPath\$TargetAssembly" -Destination "$PackagePath\plugins\$TargetAssembly"
+    Copy-Item -Path "$PackagePath\README.md" -Destination "$ProjectPath\README.md"
+    Compress-Archive -Path "$PackagePath\*" -DestinationPath "$TargetPath\$TargetAssembly.zip" -Force
+}
+
         
     # set dnspy debugger env
     #$dnspy = '--debugger-agent=transport=dt_socket,server=y,address=127.0.0.1:56000,suspend=y,no-hide-debugger'
     #[Environment]::SetEnvironmentVariable('DNSPY_UNITY_DBG2','','User')
-}
 
 # Pop Location
 Pop-Location

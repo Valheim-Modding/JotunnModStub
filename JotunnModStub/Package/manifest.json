@@ -1,0 +1,10 @@
+﻿{
+  "name": "JotunnModStub",
+  "description": "",
+  "version_number": "1.0.0",
+  "website_url": "",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.601",
+    ""
+  ]
+}
