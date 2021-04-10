@@ -392,6 +392,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configs.cs" />
     <Compile Include="Properties\IgnoreAccessModifiers.cs" />
     <Compile Include="JotunnModStub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
