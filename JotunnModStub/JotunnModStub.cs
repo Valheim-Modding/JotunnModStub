@@ -6,8 +6,6 @@
 
 using BepInEx;
 using UnityEngine;
-using JotunnLib.Utils;
-using BepInEx.Logging;
 using BepInEx.Configuration;
 
 namespace JotunnModStub
@@ -20,12 +18,11 @@ namespace JotunnModStub
         public const string PluginGUID = "com.jotunn.jotunnmodstub";
         public const string PluginName = "JotunnModStub";
         public const string PluginVersion = "0.0.1";
-        public static ManualLogSource Logger;
-        public static ConfigFile Config;
+        public static new JotunnLib.Logger Logger;
+        public static new ConfigFile Config;
 
         private void Awake()
         {
-            Logger = base.Logger;
             Config = base.Config;
             // Do all your init stuff here
         }
