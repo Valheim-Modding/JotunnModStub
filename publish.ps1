@@ -50,9 +50,10 @@ if ($Target.Equals("Debug")) {
     if (Test-Path -Path "$pdb") {
         Write-Host "Copy Debug files for plugin $asm"
         Copy-Item -Path "$pdb" -Destination "$plug" -Force
-        start "$(Get-Location)\libraries\Debug\pdb2mdb.exe" `"$plug\$TargetAssembly`"\
+        start "$(Get-Location)\libraries\Debug\pdb2mdb.exe" "$plug\$TargetAssembly"
     }
 }
+
 if($Target.Equals("Release")) {
     Write-Host "Packaging for ThunderStore..."
     $Package="Package"

@@ -1,29 +1,35 @@
-A Valheim mod stub project including build tools for debugging your code in Visual Studio and publishing a mod including BepInEx as zip files for Windows and Unix. There is no actual plugin content included, just a bare minimum plugin class. 
+A Valheim mod stub project using [JötunnLib](https://github.com/Valheim-Modding/Jotunn) including build tools for debugging your code in Visual Studio. There is no actual plugin content included, just a bare minimum plugin class. 
 
 # Development Environment Setup
 
 How to setup the development enviroment for this project.
 
 1. Install [Visual Studio 2019](https://visualstudio.microsoft.com) and add the C# workload.
-2. Download this package: https://mega.nz/file/hBM0BDBS#eAY26LfmSSVlIz2MZn0ox8WKspfKmeIssz7durp5SfM
-3. Unpack into your Valheim root folder. You should now see a new folder called `<ValheimDir>\unstripped_corlib`.
+2. Download this package: [BepInEx pack for Valheim](https://valheim.thunderstore.io/package/1F31A/BepInEx_Valheim_Full/)
+3. Unpack into your Valheim root folder. You should now see a new folder called `<ValheimDir>\unstripped_corlib` and more additional stuff.
 4. [Compile](https://github.com/CabbageCrow/AssemblyPublicizer) or [Download](https://github.com/CabbageCrow/AssemblyPublicizer/releases) AssemblyPublicizers executable version. This will result in a new executable `AssemblyPublicizer.exe`.
 5. Drag and drop all `assembly_*.dll` files from `<ValheimDir>\valheim_Data\Managed` onto `AssemblyPublicizer.exe`. You should get a new folder `<ValheimDir>\valheim_Data\Managed\publicized_assemblies` with all dragged dll files in it.
 6. Clone this repository using git. That should create a new folder `ValheimModStub`.
-7. Create a new user project file `ValheimModStub.csproj.user` alongside the project file within `<ValheimModStub>\ValheimModStub` to define some properties local to you. Paste this snippet and configure the paths as they are present on your computer.
+7. Create a new environment file `Environment.props` in the projects base path `<ValheimModStub>`. Paste this snippet and change the path according to your local Valheim installation.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <!-- Needs to be your path to the base Valheim folder -->
-    <ValheimDir>F:\Steam\steamapps\common\Valheim</ValheimDir>
+    <VALHEIM_INSTALL>F:\Steam\steamapps\common\Valheim</VALHEIM_INSTALL>
   </PropertyGroup>
+</Project>
+```
+7. Create a new user project file `ValheimModStub.csproj.user` alongside the project file within `<ValheimModStub>\ValheimModStub` if you want to start Valheim directly after building Debug. Paste this snippet into the file.
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <StartAction>Program</StartAction>
     <!-- Start valheim.exe after building Debug-->
     <StartProgram>$(ValheimDir)\valheim.exe</StartProgram>
     <!-- If you want to connect to a server automatically, add '+connect <ip-address>:<port>' as StartArguments -->
-    <StartArguments>+console</StartArguments>
+    <StartArguments>-console</StartArguments>
   </PropertyGroup>
 </Project>
 ```
@@ -35,8 +41,6 @@ Included in this repo are a PowerShell script `publish.ps1` and a folder `resour
 
 ## Building Debug
 
-* The contents of `<ValheimModStub>\resources\Local` are copied to `<ValheimDir>`. You can put there whatever you want to copy to the game directoy alongside the plugin dll.
-* The BepInEx core libraries are copied from `<ValheimModStub>\packages` and `<ValheimModStub>\libraries\BepInEx` to `<ValheimDir>\BepInEx\core`.
 * The compiled dll file for this project is copied to `<ValheimDir>\BepInEx\plugins`.
 * A .mdb file is generated for the compiled project dll and copied to `<ValheimDir>\BepInEx\plugins`.
 * `<ValheimModStub>\libraries\Debug\mono-2.0-bdwgc.dll` is copied to `<ValheimDir>\MonoBleedingEdge\EmbedRuntime` replacing the original file (a backup is created before).
