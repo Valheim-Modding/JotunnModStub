@@ -8,44 +8,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JotunnModStub", "JotunnModS
 		{839DFF98-EE10-4BA6-879F-5BF628889F4F} = {839DFF98-EE10-4BA6-879F-5BF628889F4F}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{E83E7A95-30CC-4FE5-8924-547833A4BDE0}"
-	ProjectSection(SolutionItems) = preProject
-		.gitattributes = .gitattributes
-		.gitignore = .gitignore
-		publish.ps1 = publish.ps1
-		README.MD = README.MD
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "win", "win", "{5FDD9881-A5D1-4E5D-A35D-36B80DC761E2}"
-	ProjectSection(SolutionItems) = preProject
-		resources\Windows\BepInEx\config\BepInEx.cfg = resources\Windows\BepInEx\config\BepInEx.cfg
-		resources\Windows\doorstop_config.ini = resources\Windows\doorstop_config.ini
-		resources\Windows\winhttp.dll = resources\Windows\winhttp.dll
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unix", "unix", "{6A6D0768-1FED-4A62-927C-3DD60EE2BA83}"
-	ProjectSection(SolutionItems) = preProject
-		resources\Unix\BepInEx\config\BepInEx.cfg = resources\Unix\BepInEx\config\BepInEx.cfg
-		resources\Unix\start_game_bepinex.sh = resources\Unix\start_game_bepinex.sh
-		resources\Unix\start_server_bepinex.sh = resources\Unix\start_server_bepinex.sh
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libdoorstop", "libdoorstop", "{42B85D7A-2F17-42AA-BA42-464AF8B879B8}"
-	ProjectSection(SolutionItems) = preProject
-		resources\Unix\doorstop_libs\libdoorstop_x64.dylib = resources\Unix\doorstop_libs\libdoorstop_x64.dylib
-		resources\Unix\doorstop_libs\libdoorstop_x64.so = resources\Unix\doorstop_libs\libdoorstop_x64.so
-		resources\Unix\doorstop_libs\libdoorstop_x86.dylib = resources\Unix\doorstop_libs\libdoorstop_x86.dylib
-		resources\Unix\doorstop_libs\libdoorstop_x86.so = resources\Unix\doorstop_libs\libdoorstop_x86.so
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "local", "local", "{1D77B690-4BBD-4C7A-82DA-15D8E231971E}"
-	ProjectSection(SolutionItems) = preProject
-		resources\Local\BepInEx\config\BepInEx.cfg = resources\Local\BepInEx\config\BepInEx.cfg
-		resources\Local\doorstop_config.ini = resources\Local\doorstop_config.ini
-		resources\Local\BepInEx\config\org.bepinex.valheim.displayinfo.cfg = resources\Local\BepInEx\config\org.bepinex.valheim.displayinfo.cfg
-		resources\Local\winhttp.dll = resources\Local\winhttp.dll
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JotunnBuildTask", "JotunnBuildTask\JotunnBuildTask.csproj", "{839DFF98-EE10-4BA6-879F-5BF628889F4F}"
 EndProject
 Global
@@ -65,12 +27,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{5FDD9881-A5D1-4E5D-A35D-36B80DC761E2} = {E83E7A95-30CC-4FE5-8924-547833A4BDE0}
-		{6A6D0768-1FED-4A62-927C-3DD60EE2BA83} = {E83E7A95-30CC-4FE5-8924-547833A4BDE0}
-		{42B85D7A-2F17-42AA-BA42-464AF8B879B8} = {6A6D0768-1FED-4A62-927C-3DD60EE2BA83}
-		{1D77B690-4BBD-4C7A-82DA-15D8E231971E} = {E83E7A95-30CC-4FE5-8924-547833A4BDE0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {04FA40AF-91D5-4CE8-92ED-7530C8DF0D5E}
