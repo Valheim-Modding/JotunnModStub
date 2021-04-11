@@ -13,7 +13,7 @@ namespace JotunnModStub
     [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
     [BepInDependency(JotunnLib.Main.ModGuid)]
     //[NetworkCompatibilty(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Minor)]
-    internal class JotunnModStubPlugin : BaseUnityPlugin
+    internal class JotunnModStub : BaseUnityPlugin
     {
         public const string PluginGUID = "com.jotunn.jotunnmodstub";
         public const string PluginName = "JotunnModStub";
