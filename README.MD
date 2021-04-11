@@ -1,16 +1,13 @@
-A Valheim mod stub project using [JötunnLib](https://github.com/Valheim-Modding/Jotunn) including build tools for debugging your code in Visual Studio. There is no actual plugin content included, just a bare minimum plugin class. 
+A Valheim mod stub project using [JötunnLib](https://github.com/Valheim-Modding/Jotunn) including build tools for debugging your code in Visual Studio and a stub Unity project. There is no actual plugin content included, just a bare minimum plugin class. 
 
 # Development Environment Setup
 
 How to setup the development enviroment for this project.
 
 1. Install [Visual Studio 2019](https://visualstudio.microsoft.com) and add the C# workload.
-2. Download this package: [BepInEx pack for Valheim](https://valheim.thunderstore.io/package/1F31A/BepInEx_Valheim_Full/)
-3. Unpack into your Valheim root folder. You should now see a new folder called `<ValheimDir>\unstripped_corlib` and more additional stuff.
-4. [Compile](https://github.com/CabbageCrow/AssemblyPublicizer) or [Download](https://github.com/CabbageCrow/AssemblyPublicizer/releases) AssemblyPublicizers executable version. This will result in a new executable `AssemblyPublicizer.exe`.
-5. Drag and drop all `assembly_*.dll` files from `<ValheimDir>\valheim_Data\Managed` onto `AssemblyPublicizer.exe`. You should get a new folder `<ValheimDir>\valheim_Data\Managed\publicized_assemblies` with all dragged dll files in it.
-6. Clone this repository using git. That should create a new folder `ValheimModStub`.
-7. Create a new environment file `Environment.props` in the projects base path `<ValheimModStub>`. Paste this snippet and change the path according to your local Valheim installation.
+2. Download [BepInEx pack for Valheim](https://valheim.thunderstore.io/package/1F31A/BepInEx_Valheim_Full/) and unpack into your Valheim root folder. You should now see a new folder called `<ValheimDir>\unstripped_corlib` and more additional stuff.
+3. Clone this repository using git. That should create a new folder `ValheimModStub`.
+4. Create a new environment file `Environment.props` in the projects base path `<ValheimModStub>`. Paste this snippet and change the path according to your local Valheim installation.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
@@ -20,7 +17,7 @@ How to setup the development enviroment for this project.
   </PropertyGroup>
 </Project>
 ```
-7. Create a new user project file `ValheimModStub.csproj.user` alongside the project file within `<ValheimModStub>\ValheimModStub` if you want to start Valheim directly after building Debug. Paste this snippet into the file.
+5. Create a new user project file `ValheimModStub.csproj.user` alongside the project file within `<ValheimModStub>\ValheimModStub` if you want to start Valheim directly after building Debug. Paste this snippet into the file.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
@@ -33,7 +30,7 @@ How to setup the development enviroment for this project.
   </PropertyGroup>
 </Project>
 ```
-8. Open the Solution file `<ValheimModStub>\ValheimModStub.sln`. It should prompt you a message at the top that some NuGet-Packages are missing. Click "Restore" and restart Visual Studio when finished.
+6. Open the Solution file `<ValheimModStub>\ValheimModStub.sln`. It should prompt you a message at the top that some NuGet-Packages are missing. Click "Restore" and restart Visual Studio when finished.
 
 # Build automations
 
