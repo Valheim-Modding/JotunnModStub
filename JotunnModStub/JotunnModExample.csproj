@@ -407,6 +407,8 @@
   <ItemGroup>
     <None Include="app.config" />
     <EmbeddedResource Include="AssetsEmbedded\capeironbackpack" />
+    <EmbeddedResource Include="AssetsEmbedded\eviesbackpacks" />
+    <EmbeddedResource Include="AssetsEmbedded\eviesbackpacks1" />
     <None Include="packages.config" />
     <None Include="Package\README.md" />
   </ItemGroup>
