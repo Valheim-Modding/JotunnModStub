@@ -48,9 +48,9 @@ if ($Target.Equals("Debug")) {
 
     $pdb = "$TargetPath\$name.pdb"
     if (Test-Path -Path "$pdb") {
-        Write-Host "Copy Debug files for plugin $asm"
+        Write-Host "Copy Debug files for plugin $name"
         Copy-Item -Path "$pdb" -Destination "$plug" -Force
-        start "$(Get-Location)\libraries\Debug\pdb2mdb.exe" `"$plug\$TargetAssembly`"
+        Start-Process -FilePath "$(Get-Location)\libraries\Debug\pdb2mdb.exe" -ArgumentList "`"$plug\$TargetAssembly`""
     }
 }
 
