@@ -42,11 +42,15 @@ namespace JotunnModExample
         private void Awake()
         {
             Config = base.Config;
+
+            LocalizationManager.Instance.LocalizationRegister += registerLocalization;
+
             // Do all your init stuff here
             loadAssets();
             addItemsWithConfigs();
             addEmptyPiece();
             addMockedItems();
+            addSkills();
 
             On.ObjectDB.CopyOtherDB += addClonedItems;
             ItemManager.OnAfterInit += () => 
@@ -195,6 +199,7 @@ namespace JotunnModExample
                     new PieceRequirementConfig {Item = "Wood", Amount = 2}
                 }
             });
+            blueprintRuneLocalizations();
             PieceManager.Instance.AddPiece(placebp);
         }
 
@@ -227,12 +232,60 @@ namespace JotunnModExample
             embeddedResourceBundle.Unload(false);
         }
 
+        void registerLocalization(object sender, EventArgs e)
+        {
+            // Add translations for the custom item in addClonedItems
+            LocalizationManager.Instance.AddLocalization(new LocalizationConfig("English")
+            {
+                Translations =
+                {
+                    { "item_evilsword", "Sword of Darkness" },
+                    { "item_evilsword_desc", "Bringing the light" }
+                }
+            });
+
+            // Add translations for the custom piece in addEmptyItems
+            LocalizationManager.Instance.AddLocalization(new LocalizationConfig("English")
+            {
+                Translations =
+                {
+                    { "piece_lul", "Lulz" }
+                }
+            });
+        }
+
+        private void blueprintRuneLocalizations()
+        {
+            TextAsset[] textAssets = BlueprintRuneBundle.LoadAllAssets<TextAsset>();
+            foreach (var textAsset in textAssets)
+            {
+                var lang = textAsset.name.Replace(".json", null);
+                LocalizationManager.Instance.AddJson(lang, textAsset.ToString());
+            }
+        }
+
+
+        void addSkills()
+        {
+            // Test adding a skill with a texture
+            Sprite testSkillSprite = Sprite.Create(testTex, new Rect(0f, 0f, testTex.width, testTex.height), Vector2.zero);
+            TestSkillType = SkillManager.Instance.AddSkill(new SkillConfig
+            {
+                Identifier = "com.jotunnlib.JotunnModExample.testskill",
+                Name = "TestingSkill",
+                Description = "A nice testing skill!",
+                Icon = testSkillSprite,
+                IncreaseStep = 1f
+            });
+            //if(!TestSkillType) Logger.
+        }
 
 #if DEBUG
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.F8))
             { // Set a breakpoint here to break on F6 key press
+                Player.m_localPlayer.RaiseSkill(TestSkillType, 1);
             }
         }
 #endif
