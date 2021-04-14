@@ -21,7 +21,7 @@ namespace JotunnModExample
 {
     [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
     [BepInDependency(JotunnLib.Main.ModGuid)]
-    //[NetworkCompatibilty(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Minor)]
+    [NetworkCompatibilty(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Minor)]
     internal class JotunnModExample : BaseUnityPlugin
     {
         public const string PluginGUID = "com.jotunn.JotunnModExample";
@@ -53,11 +53,6 @@ namespace JotunnModExample
             addSkills();
 
             On.ObjectDB.CopyOtherDB += addClonedItems;
-            ItemManager.OnAfterInit += () => 
-            {
-                //backpackPrefab.GetComponent<ParticleSystemRenderer>().gameObject;
-            };
-            
         }
 
 
@@ -168,11 +163,14 @@ namespace JotunnModExample
         private void addEmptyPiece()
         {
             CustomPiece CP = new CustomPiece("$piece_lul", "Hammer");
-            var piece = CP.Piece;
-            piece.m_icon = testSprite;
-            var prefab = CP.PiecePrefab;
-            prefab.GetComponent<MeshRenderer>().material.mainTexture = testTex;
-            PieceManager.Instance.AddPiece(CP);
+            if (CP != null)
+            {
+                var piece = CP.Piece;
+                piece.m_icon = testSprite;
+                var prefab = CP.PiecePrefab;
+                prefab.GetComponent<MeshRenderer>().material.mainTexture = testTex;
+                PieceManager.Instance.AddPiece(CP);
+            }
         }
 
         private void CreateRunePieces()
