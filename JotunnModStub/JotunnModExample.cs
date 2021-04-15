@@ -48,6 +48,7 @@ namespace JotunnModExample
         {
             Config = base.Config;
 
+            InputManager.Instance.InputRegister += registerInputs;
             LocalizationManager.Instance.LocalizationRegister += registerLocalization;
 
             // Do all your init stuff here
@@ -58,7 +59,6 @@ namespace JotunnModExample
             addCommands();
             addSkills();
             createConfigValues();
-
             On.ObjectDB.CopyOtherDB += addClonedItems;
 
         }
@@ -126,6 +126,12 @@ namespace JotunnModExample
                 testPanel.SetActive(!testPanel.activeSelf);
                 showGUIButton = false;
             }
+        }
+
+        private void registerInputs(object sender, EventArgs e)
+        {
+            InputManager.Instance.AddButton(PluginGUID, "JotunnModExample_Menu",KeyCode.Insert);
+            InputManager.Instance.AddButton(PluginGUID, "GUIManagerTest", KeyCode.F7);
         }
 
         // Various forms of asset loading
