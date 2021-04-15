@@ -16,6 +16,7 @@ using System;
 using JotunnLib.Entities;
 using System.Collections.Generic;
 using System.IO;
+using JotunnModExample.ConsoleCommands;
 
 namespace JotunnModExample
 {
@@ -33,11 +34,17 @@ namespace JotunnModExample
         public AssetBundle TestAssets;
         public AssetBundle BlueprintRuneBundle;
         public Skills.SkillType TestSkillType = 0;
+
+        private bool showMenu = false;
+        private bool showGUIButton = false;
         private Texture2D testTex;
         private Sprite testSprite;
+        private GameObject testPanel;
+        private bool forceVersionMismatch = false;
+        private System.Version currentVersion;
+        private bool clonedItemsAdded = false;
         private GameObject backpackPrefab;
         private AssetBundle embeddedResourceBundle;
-        private bool clonedItemsAdded;
 
         private void Awake()
         {
@@ -50,11 +57,81 @@ namespace JotunnModExample
             addItemsWithConfigs();
             addEmptyPiece();
             addMockedItems();
+            addCommands();
             addSkills();
+            createConfigValues();
 
             On.ObjectDB.CopyOtherDB += addClonedItems;
+
+            // Get current version for the mod compatibility test
+            currentVersion = new System.Version(Info.Metadata.Version.ToString());
+            setVersion();
         }
 
+        // Called every frame
+        private void Update()
+        {
+            // Since our Update function in our BepInEx mod class will load BEFORE Valheim loads,
+            // we need to check that ZInput is ready to use first.
+            if (ZInput.instance != null)
+            {
+                // Check if our button is pressed. This will only return true ONCE, right after our button is pressed.
+                // If we hold the button down, it won't spam toggle our menu.
+                if (ZInput.GetButtonDown("JotunnModExample_Menu"))
+                {
+                    showMenu = !showMenu;
+                }
+
+                if (ZInput.GetButtonDown("GUIManagerTest"))
+                {
+                    showGUIButton = !showGUIButton;
+                }
+            }
+
+#if DEBUG
+            if (Input.GetKeyDown(KeyCode.F8))
+            {
+                Player.m_localPlayer.RaiseSkill(TestSkillType, 1);
+            }
+#endif
+        }
+
+        // Display our GUI if enabled
+        private void OnGUI()
+        {
+            if (showMenu)
+            {
+                GUI.Box(new Rect(40, 40, 150, 250), "JotunnModExample");
+            }
+
+            if (showGUIButton)
+            {
+                if (testPanel == null)
+                {
+                    if (GUIManager.Instance == null)
+                    {
+                        Logger.LogError("GUIManager instance is null");
+                        return;
+                    }
+
+                    if (GUIManager.PixelFix == null)
+                    {
+                        Logger.LogError("GUIManager pixelfix is null");
+                        return;
+                    }
+                    testPanel = GUIManager.Instance.CreateWoodpanel(GUIManager.PixelFix.transform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0, 0), 850, 600);
+
+                    GUIManager.Instance.CreateButton("A Test Button - long dong schlongsen text", testPanel.transform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f),
+                        new Vector2(0, 0), 250, 100).SetActive(true);
+                    if (testPanel == null)
+                    {
+                        return;
+                    }
+                }
+                testPanel.SetActive(!testPanel.activeSelf);
+                showGUIButton = false;
+            }
+        }
 
         private void loadAssets()
         {
@@ -276,14 +353,59 @@ namespace JotunnModExample
             //if(!TestSkillType) Logger.
         }
 
-#if DEBUG
-        private void Update()
+        // Register new console commands
+        private void addCommands()
         {
-            if (Input.GetKeyDown(KeyCode.F8))
-            { // Set a breakpoint here to break on F6 key press
-                Player.m_localPlayer.RaiseSkill(TestSkillType, 1);
+            CommandManager.Instance.AddConsoleCommand(new PrintItemsCommand());
+            CommandManager.Instance.AddConsoleCommand(new TpCommand());
+            CommandManager.Instance.AddConsoleCommand(new ListPlayersCommand());
+            CommandManager.Instance.AddConsoleCommand(new SkinColorCommand());
+            CommandManager.Instance.AddConsoleCommand(new RaiseSkillCommand());
+            CommandManager.Instance.AddConsoleCommand(new BetterSpawnCommand());
+        }
+
+        // Create some sample configuration values to check server sync
+        private void createConfigValues()
+        {
+            Config.SaveOnConfigSet = true;
+
+            Config.Bind("JotunnLibTest", "StringValue1", "StringValue", new ConfigDescription("Server side string", null, new ConfigurationManagerAttributes { IsAdminOnly = true }));
+            Config.Bind("JotunnLibTest", "FloatValue1", 750f, new ConfigDescription("Server side float", null, new ConfigurationManagerAttributes { IsAdminOnly = true }));
+            Config.Bind("JotunnLibTest", "IntegerValue1", 200, new ConfigDescription("Server side integer", null, new ConfigurationManagerAttributes { IsAdminOnly = true }));
+            Config.Bind("JotunnLibTest", "BoolValue1", false, new ConfigDescription("Server side bool", null, new ConfigurationManagerAttributes { IsAdminOnly = true }));
+            Config.Bind("JotunnLibTest", "KeycodeValue", KeyCode.F10,
+                new ConfigDescription("Server side Keycode", null, new ConfigurationManagerAttributes() { IsAdminOnly = true }));
+
+            // Add client config to test ModCompatibility
+            Config.Bind("JotunnLibTest", "EnableVersionMismatch", false, new ConfigDescription("Enable to test ModCompatibility module", null));
+            forceVersionMismatch = (bool)Config["JotunnLibTest", "EnableVersionMismatch"].BoxedValue;
+            Config.SettingChanged += Config_SettingChanged;
+        }
+
+        // React on changed settings
+        private void Config_SettingChanged(object sender, BepInEx.Configuration.SettingChangedEventArgs e)
+        {
+            if (e.ChangedSetting.Definition.Section == "JotunnLibTest" && e.ChangedSetting.Definition.Key == "EnableVersionMismatch")
+            {
+                forceVersionMismatch = (bool)e.ChangedSetting.BoxedValue;
             }
         }
-#endif
+
+        // Set version of the plugin for the mod compatibility test
+        private void setVersion()
+        {
+            var propinfo = Info.Metadata.GetType().GetProperty("Version", BindingFlags.Public | BindingFlags.FlattenHierarchy | BindingFlags.Instance);
+
+            // Change version number of this module if test is enabled
+            if (forceVersionMismatch)
+            {
+                System.Version v = new System.Version(0, 0, 0);
+                propinfo.SetValue(this.Info.Metadata, v, null);
+            }
+            else
+            {
+                propinfo.SetValue(Info.Metadata, currentVersion, null);
+            }
+        }
     }
 }
