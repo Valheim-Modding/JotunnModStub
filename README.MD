@@ -1,6 +1,13 @@
-A Valheim mod stub project using [JötunnLib](https://github.com/Valheim-Modding/Jotunn) including build tools for debugging your code in Visual Studio. There is no actual plugin content included, just a bare minimum plugin class. 
+# DEPRECATED DOCUMENTATION
+Please see [Github Pages](https://valheim-modding.github.io/Jotunn/tutorials/getting-started.html) for up to date documentation.
+
+
+
+
 
 # Development Environment Setup
+
+A Valheim mod stub project using [JötunnLib](https://github.com/Valheim-Modding/Jotunn) including build tools for debugging your code in Visual Studio. There is no actual plugin content included, just a bare minimum plugin class. 
 
 How to setup the development enviroment for this project.
 
