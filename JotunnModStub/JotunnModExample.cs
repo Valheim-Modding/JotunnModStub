@@ -40,8 +40,6 @@ namespace JotunnModExample
         private Texture2D testTex;
         private Sprite testSprite;
         private GameObject testPanel;
-        private bool forceVersionMismatch = false;
-        private System.Version currentVersion;
         private bool clonedItemsAdded = false;
         private GameObject backpackPrefab;
         private AssetBundle embeddedResourceBundle;
@@ -63,9 +61,6 @@ namespace JotunnModExample
 
             On.ObjectDB.CopyOtherDB += addClonedItems;
 
-            // Get current version for the mod compatibility test
-            currentVersion = new System.Version(Info.Metadata.Version.ToString());
-            setVersion();
         }
 
         // Called every frame
@@ -133,6 +128,7 @@ namespace JotunnModExample
             }
         }
 
+        // Various forms of asset loading
         private void loadAssets()
         {
             // Load texture
@@ -156,6 +152,7 @@ namespace JotunnModExample
             
         }
 
+        // Implementation of cloned items
         private void addClonedItems(On.ObjectDB.orig_CopyOtherDB orig, ObjectDB self, ObjectDB other)
         {
             // You want that to run only once, JotunnLib has the item cached for the game session
@@ -185,31 +182,7 @@ namespace JotunnModExample
             orig(self, other);
         }
 
-        private static void recipeEvilSword(ItemDrop itemDrop)
-        {
-            // Create and add a recipe for the copied item
-            Recipe recipe = ScriptableObject.CreateInstance<Recipe>();
-            recipe.name = "Recipe_EvilSword";
-            recipe.m_item = itemDrop;
-            recipe.m_craftingStation = PrefabManager.Cache.GetPrefab<CraftingStation>("piece_workbench");
-            recipe.m_resources = new Piece.Requirement[]
-            {
-                    new Piece.Requirement()
-                    {
-                        m_resItem = PrefabManager.Cache.GetPrefab<ItemDrop>("Stone"),
-                        m_amount = 1
-                    },
-                    new Piece.Requirement()
-                    {
-                        m_resItem = PrefabManager.Cache.GetPrefab<ItemDrop>("CustomWood"),
-                        m_amount = 1
-                    }
-            };
-            CustomRecipe CR = new CustomRecipe(recipe, false, false);
-            ItemManager.Instance.AddRecipe(CR);
-        }
-
-        // Add new Items with item Configs
+        // Add new assets via item Configs
         private void addItemsWithConfigs()
         {
             // Add a custom piece table
@@ -221,6 +194,7 @@ namespace JotunnModExample
             BlueprintRuneBundle.Unload(false);
         }
 
+        //Implementation of items and recipes via configs
         private void CreateBlueprintRune()
         {
             // Create and add a custom item
@@ -237,6 +211,7 @@ namespace JotunnModExample
             ItemManager.Instance.AddItem(rune);
         }
 
+        //Implementation of stub objects
         private void addEmptyPiece()
         {
             CustomPiece CP = new CustomPiece("$piece_lul", "Hammer");
@@ -250,6 +225,7 @@ namespace JotunnModExample
             }
         }
 
+        //Implementation of pieces via configs.
         private void CreateRunePieces()
         {
             // Create and add custom pieces
@@ -276,6 +252,32 @@ namespace JotunnModExample
             blueprintRuneLocalizations();
         }
 
+        //Implementation of assets via using manual recipe creation and prefab cache's
+        private static void recipeEvilSword(ItemDrop itemDrop)
+        {
+            // Create and add a recipe for the copied item
+            Recipe recipe = ScriptableObject.CreateInstance<Recipe>();
+            recipe.name = "Recipe_EvilSword";
+            recipe.m_item = itemDrop;
+            recipe.m_craftingStation = PrefabManager.Cache.GetPrefab<CraftingStation>("piece_workbench");
+            recipe.m_resources = new Piece.Requirement[]
+            {
+                    new Piece.Requirement()
+                    {
+                        m_resItem = PrefabManager.Cache.GetPrefab<ItemDrop>("Stone"),
+                        m_amount = 1
+                    },
+                    new Piece.Requirement()
+                    {
+                        m_resItem = PrefabManager.Cache.GetPrefab<ItemDrop>("CustomWood"),
+                        m_amount = 1
+                    }
+            };
+            CustomRecipe CR = new CustomRecipe(recipe, false, false);
+            ItemManager.Instance.AddRecipe(CR);
+        }
+
+        //Implementation of assets using mocks, adding recipe's manually without the config abstraction
         private void addMockedItems()
         {
             if (!backpackPrefab) JotunnLib.Logger.LogWarning($"Failed to load asset from bundle: {embeddedResourceBundle}");
@@ -305,6 +307,7 @@ namespace JotunnModExample
             embeddedResourceBundle.Unload(false);
         }
 
+        //A manual implementation of localisation.
         void registerLocalization(object sender, EventArgs e)
         {
             // Add translations for the custom item in addClonedItems
@@ -327,6 +330,7 @@ namespace JotunnModExample
             });
         }
 
+        //Add localisations from asset bundles
         private void blueprintRuneLocalizations()
         {
             TextAsset[] textAssets = BlueprintRuneBundle.LoadAllAssets<TextAsset>();
@@ -337,7 +341,7 @@ namespace JotunnModExample
             }
         }
 
-
+        //Add a new test skill
         void addSkills()
         {
             // Test adding a skill with a texture
@@ -350,7 +354,6 @@ namespace JotunnModExample
                 Icon = testSkillSprite,
                 IncreaseStep = 1f
             });
-            //if(!TestSkillType) Logger.
         }
 
         // Register new console commands
@@ -369,43 +372,13 @@ namespace JotunnModExample
         {
             Config.SaveOnConfigSet = true;
 
+            //Here we showcase BepInEx's configuration flexibility. This is nothing to do we JVL, however we do provide an interface that is capable of respecting the configuration parameters detailed here.
             Config.Bind("JotunnLibTest", "StringValue1", "StringValue", new ConfigDescription("Server side string", null, new ConfigurationManagerAttributes { IsAdminOnly = true }));
-            Config.Bind("JotunnLibTest", "FloatValue1", 750f, new ConfigDescription("Server side float", null, new ConfigurationManagerAttributes { IsAdminOnly = true }));
+            Config.Bind("JotunnLibTest", "FloatValue1", 750f, new ConfigDescription("Server side float", new AcceptableValueRange<float>(0f,1000f), new ConfigurationManagerAttributes { IsAdminOnly = true }));
             Config.Bind("JotunnLibTest", "IntegerValue1", 200, new ConfigDescription("Server side integer", null, new ConfigurationManagerAttributes { IsAdminOnly = true }));
             Config.Bind("JotunnLibTest", "BoolValue1", false, new ConfigDescription("Server side bool", null, new ConfigurationManagerAttributes { IsAdminOnly = true }));
             Config.Bind("JotunnLibTest", "KeycodeValue", KeyCode.F10,
                 new ConfigDescription("Server side Keycode", null, new ConfigurationManagerAttributes() { IsAdminOnly = true }));
-
-            // Add client config to test ModCompatibility
-            Config.Bind("JotunnLibTest", "EnableVersionMismatch", false, new ConfigDescription("Enable to test ModCompatibility module", null));
-            forceVersionMismatch = (bool)Config["JotunnLibTest", "EnableVersionMismatch"].BoxedValue;
-            Config.SettingChanged += Config_SettingChanged;
-        }
-
-        // React on changed settings
-        private void Config_SettingChanged(object sender, BepInEx.Configuration.SettingChangedEventArgs e)
-        {
-            if (e.ChangedSetting.Definition.Section == "JotunnLibTest" && e.ChangedSetting.Definition.Key == "EnableVersionMismatch")
-            {
-                forceVersionMismatch = (bool)e.ChangedSetting.BoxedValue;
-            }
-        }
-
-        // Set version of the plugin for the mod compatibility test
-        private void setVersion()
-        {
-            var propinfo = Info.Metadata.GetType().GetProperty("Version", BindingFlags.Public | BindingFlags.FlattenHierarchy | BindingFlags.Instance);
-
-            // Change version number of this module if test is enabled
-            if (forceVersionMismatch)
-            {
-                System.Version v = new System.Version(0, 0, 0);
-                propinfo.SetValue(this.Info.Metadata, v, null);
-            }
-            else
-            {
-                propinfo.SetValue(Info.Metadata, currentVersion, null);
-            }
         }
     }
 }
