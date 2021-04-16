@@ -52,6 +52,10 @@ if ($Target.Equals("Debug")) {
         Copy-Item -Path "$pdb" -Destination "$plug" -Force
         Start-Process -FilePath "$(Get-Location)\libraries\Debug\pdb2mdb.exe" -ArgumentList "`"$plug\$TargetAssembly`""
     }
+
+    # Set dnspy debugger env - after a relog in Windows mono runtime listens on port 56000 instead of 55555
+    #$dnspy = '--debugger-agent=transport=dt_socket,server=y,address=127.0.0.1:56000,suspend=n,no-hide-debugger'
+    #[Environment]::SetEnvironmentVariable('DNSPY_UNITY_DBG2',$dnspy,'User')
 }
 
 if($Target.Equals("Release")) {
@@ -64,11 +68,6 @@ if($Target.Equals("Release")) {
     Copy-Item -Path "$PackagePath\README.md" -Destination "$ProjectPath\README.md"
     Compress-Archive -Path "$PackagePath\*" -DestinationPath "$TargetPath\$TargetAssembly.zip" -Force
 }
-
-        
-    # set dnspy debugger env
-    #$dnspy = '--debugger-agent=transport=dt_socket,server=y,address=127.0.0.1:56000,suspend=y,no-hide-debugger'
-    #[Environment]::SetEnvironmentVariable('DNSPY_UNITY_DBG2','','User')
 
 # Pop Location
 Pop-Location
