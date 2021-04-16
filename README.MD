@@ -58,7 +58,7 @@ Included in this repo is a PowerShell script `publish.ps1`. The script is refere
 
 # Developing Assets with Unity
 
-New Assets can be created with Unity and imported into Valheim using the mod. A Unity project is included in this repository under `<ValheimMod>\ValheimModUnity`.
+New Assets can be created with Unity and imported into Valheim using the mod. A Unity project is included in this repository under `<JotunnModStub>\JotunnModUnity`.
 
 ## Unity Editor Setup
 
