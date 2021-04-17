@@ -19,12 +19,12 @@ namespace JotunnModStub
         public const string PluginName = "JotunnModStub";
         public const string PluginVersion = "0.0.1";
         public static new JotunnLib.Logger Logger;
-        public static new ConfigFile Config;
 
         private void Awake()
         {
-            Config = base.Config;
             // Do all your init stuff here
+            // Acceptable value ranges can be defined to allow configuration via a slider in the BepInEx ConfigurationManager: https://github.com/BepInEx/BepInEx.ConfigurationManager
+            Config.Bind<int>("Main Section", "Example configuration integer", 1, new ConfigDescription("This is an example config, using a range limitation for ConfigurationManager", new AcceptableValueRange<int>(0, 100)));
         }
 
 #if DEBUG
