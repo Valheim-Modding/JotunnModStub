@@ -39,7 +39,7 @@ How to setup the development enviroment for this project.
   </PropertyGroup>
 </Project>
 ```
-8. Open the Solution file `<JotunnModStub>\JotunnModStub.sln`. It should prompt you a message at the top that some NuGet-Packages are missing. Click "Restore" and restart Visual Studio when finished.
+8. Open the Solution file `<JotunnModStub>\JotunnModStub.sln`. Right-click on the project or solution in the Solution Explorer and select `Manage NuGet packages...`. It should prompt you a message at the top that some NuGet-Packages are missing. Click "Restore" and restart Visual Studio when finished.
 
 # Build automations
 
