@@ -7,7 +7,7 @@ Please see [Github Pages](https://valheim-modding.github.io/Jotunn/tutorials/get
 
 # Development Environment Setup
 
-A Valheim mod stub project using [JötunnLib](https://github.com/Valheim-Modding/Jotunn) including build tools for debugging your code in Visual Studio. There is no actual plugin content included, just a bare minimum plugin class. 
+A Valheim mod stub project using [JÃ¶tunnLib](https://github.com/Valheim-Modding/Jotunn) including build tools for debugging your code in Visual Studio. There is no actual plugin content included, just a bare minimum plugin class. 
 
 How to setup the development enviroment for this project.
 
@@ -65,7 +65,7 @@ New Assets can be created with Unity and imported into Valheim using the mod. A 
 1. [Download](https://public-cdn.cloud.unity3d.com/hub/prod/UnityHubSetup.exe) UnityHub directly from Unity or install it with the Visual Studio Installer via `Individual Components` -> `Visual Studio Tools for Unity`.
 2. You will need an Unity account to register your PC and get a free licence. Create the account, login with it in Unity Hub and get your licence via `Settings` -> `Licence Management`.
 3. Install Unity Editor version 2019.4.20f.
-4. Open Unity and add the ValheimModUnity project.
+4. Open Unity and add the JotunnModUnity project.
 5. Install the `AssetBundle Browser` package in the Unity Editor via `Window`-> `Package Manager`.
 6. Copy all `assembly_*.dll` from `<ValheimDir>\valheim_Data\Managed` into `<JotunnModStub>\JotunnModUnity\Assets\Assemblies`. **Do this directly in the filesystem - don't import the dlls in Unity**.
 7. Go back to the Unity Editor and press `Ctrl+R`. This should reload all files and add the Valheim assemblies under `Assets\Assemblies`
