@@ -1,9 +1,6 @@
-# DEPRECATED DOCUMENTATION
-Please see [Github Pages](https://valheim-modding.github.io/Jotunn/tutorials/getting-started.html) for up to date documentation.
+# Quick Setup Guide
 
-
-
-
+These are quick setup steps with no context provided. Please see [Github Pages](https://valheim-modding.github.io/Jotunn/tutorials/getting-started.html) for more in depth documentation.
 
 # Development Environment Setup
 
