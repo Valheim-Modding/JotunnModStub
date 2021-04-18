@@ -6,7 +6,7 @@ A Valheim mod stub project using [JötunnLib](https://github.com/Valheim-Modding
 
 These are quick setup steps with no context provided. Please see [Github Pages](https://valheim-modding.github.io/Jotunn/tutorials/getting-started.html) for more in depth documentation.
 
-# Development Environment Setup
+## Development Environment Setup
 
 How to setup the development enviroment for this project.
 
@@ -15,7 +15,7 @@ How to setup the development enviroment for this project.
 3. Unpack into your Valheim root folder. You should now see a new folder called `<ValheimDir>\unstripped_corlib` and more additional stuff.
 4. [Compile](https://github.com/CabbageCrow/AssemblyPublicizer) or [Download](https://github.com/CabbageCrow/AssemblyPublicizer/releases) AssemblyPublicizers executable version. This will result in a new executable `AssemblyPublicizer.exe`.
 5. Drag and drop all `assembly_*.dll` files from `<ValheimDir>\valheim_Data\Managed` onto `AssemblyPublicizer.exe`. You should get a new folder `<ValheimDir>\valheim_Data\Managed\publicized_assemblies` with all dragged dll files in it.
-6. Clone this repository using git. That should create a new folder `JotunnModStub`.
+6. Fork and clone this repository using git. That should create a new folder `JotunnModStub`.
 7. Create a new environment file `Environment.props` in the projects base path `<JotunnModStub>`. Paste this snippet and change the path according to your local Valheim installation.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -40,8 +40,9 @@ How to setup the development enviroment for this project.
 </Project>
 ```
 8. Open the Solution file `<JotunnModStub>\JotunnModStub.sln`. Right-click on the project or solution in the Solution Explorer and select `Manage NuGet packages...`. It should prompt you a message at the top that some NuGet-Packages are missing. Click "Restore" and restart Visual Studio when finished.
+9. Rename the Solution/Project and everything related so that it resembles your own projects name.
 
-# Build automations
+## Build automations
 
 Included in this repo is a PowerShell script `publish.ps1`. The script is referenced in the project file as a post-build event. Depending on the chosen configuration in Visual Studio the script executes the following actions.
 
