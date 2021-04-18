@@ -42,25 +42,25 @@ How to setup the development enviroment for this project.
 8. Open the Solution file `<JotunnModStub>\JotunnModStub.sln`. Right-click on the project or solution in the Solution Explorer and select `Manage NuGet packages...`. It should prompt you a message at the top that some NuGet-Packages are missing. Click "Restore" and restart Visual Studio when finished.
 9. Rename the Solution/Project and everything related so that it resembles your own projects name.
 
-## Build automations
+### Build automations
 
 Included in this repo is a PowerShell script `publish.ps1`. The script is referenced in the project file as a post-build event. Depending on the chosen configuration in Visual Studio the script executes the following actions.
 
-## Building Debug
+### Building Debug
 
 * The compiled dll file for this project is copied to `<ValheimDir>\BepInEx\plugins`.
 * A .mdb file is generated for the compiled project dll and copied to `<ValheimDir>\BepInEx\plugins`.
 * `<JotunnModStub>\libraries\Debug\mono-2.0-bdwgc.dll` is copied to `<ValheimDir>\MonoBleedingEdge\EmbedRuntime` replacing the original file (a backup is created before).
 
-## Building Release
+### Building Release
 
 * A compressed file with the binaries is created in `<JotunnModStub>\Packages`ready for upload to ThunderStore.
 
-# Developing Assets with Unity
+## Developing Assets with Unity
 
 New Assets can be created with Unity and imported into Valheim using the mod. A Unity project is included in this repository under `<JotunnModStub>\JotunnModUnity`.
 
-## Unity Editor Setup
+### Unity Editor Setup
 
 1. [Download](https://public-cdn.cloud.unity3d.com/hub/prod/UnityHubSetup.exe) UnityHub directly from Unity or install it with the Visual Studio Installer via `Individual Components` -> `Visual Studio Tools for Unity`.
 2. You will need an Unity account to register your PC and get a free licence. Create the account, login with it in Unity Hub and get your licence via `Settings` -> `Licence Management`.
@@ -70,7 +70,7 @@ New Assets can be created with Unity and imported into Valheim using the mod. A 
 6. Copy all `assembly_*.dll` from `<ValheimDir>\valheim_Data\Managed` into `<JotunnModStub>\JotunnModUnity\Assets\Assemblies`. **Do this directly in the filesystem - don't import the dlls in Unity**.
 7. Go back to the Unity Editor and press `Ctrl+R`. This should reload all files and add the Valheim assemblies under `Assets\Assemblies`
 
-# Debugging with dnSpy
+## Debugging with dnSpy
 
 Thanks to mono and unity-mono being open source, we patched and compiled our own mono runtime to enable actual live debugging of the game and the mod itself with dnSpy.
 
@@ -82,7 +82,7 @@ Thanks to mono and unity-mono being open source, we patched and compiled our own
 6. Now go to `Debug` -> `Start Debugging` and select Unity debug engine. Select your valheim.exe as the executable and hit OK.
 7. If you did set some breakpoints, the game will halt when it hits the breakpoint in memory and dnSpy will show you the objects in memory and much more useful stuff.
 
-# Debugging with Visual Studio
+## Debugging with Visual Studio
 
 Your own code can be debugged in source with Visual Studio itself. You cannot debug game disassemblies as with dnSpy, though.
 
@@ -95,16 +95,16 @@ Your own code can be debugged in source with Visual Studio itself. You cannot de
 5. Go to `Debug` -> `Attach Unity debugger`
 6. Since the patched mono dll does not open the same port as Unity Dev builds, you have to click on `Input IP`. It should fill in your local IP automatically. you just have to change the port to `55555`and the debugger should connect.
 
-# Actions after a game update
+## Actions after a game update
 
 When Valheim updates it is likely that parts of the assembly files change. If this is the case, the references to the assembly files must be renewed in Visual Studio and Unity.
 
-## Visual Studio actions
+### Visual Studio actions
 
 1. Make new versions of the publicized assemblies as described in [Development Environment Setup] step 5.
 2. Go to VS and clean/build (or just rebuild) the project.
 
-## Unity actions
+### Unity actions
 
 1. Copy all original `assembly_*.dll` as described in [Unity Editor Setup] step 6 and 7.
 2. Go to Unity Editor and press `Ctrl+R`. This reloads all files from the filesystem and "re-imports" the copied dlls into the project.
