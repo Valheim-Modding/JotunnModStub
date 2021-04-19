@@ -9,7 +9,7 @@ name: Adjust version on tag
 
 jobs:
   build_release:
-    name: Create Release
+    name: Adjust version on tag
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
