@@ -1,0 +1,29 @@
+# This is a basic workflow to help you get started with Actions
+
+on:
+  push:
+    tags:
+      - "v*"
+
+name: Adjust version on tag
+
+jobs:
+  build_release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PUSH_TO_BRANCH }}
+          ref: 'master'
+
+      - name: Get the version
+        id: get_version
+        run: |
+          echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+          echo ::set-output name=VERSION_NUMBER::${GITHUB_REF/refs\/tags\/v/}
+
+      # Got version and repo, change version inside and push again
+      
