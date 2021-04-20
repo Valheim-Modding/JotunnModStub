@@ -24,7 +24,7 @@ jobs:
         run: |
           echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
           echo ::set-output name=VERSION_NUMBER::${GITHUB_REF/refs\/tags\/v/}
-          echo ::set-output name=VERSION_WITHOUT_BETA::$(echo ${GITHUB_REF/refs\/tags\/v/} | sed -e 's/-.*//'})
+          echo ::set-output name=VERSION_WITHOUT_BETA::$(echo ${GITHUB_REF/refs\/tags\/v/} | sed -e 's/-.*//')
 
       # Get build commands
       - name: Get build commands
