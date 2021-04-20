@@ -40,7 +40,7 @@ jobs:
       - name: Change packages.config version
         run: |
           sed -e 's/JotunnLib" version=".*" t/JotunnLib" version="${{ steps.get_version.outputs.VERSION_NUMBER }}" t/' JotunnModStub/packages.config > JotunnModStub/p2.c && mv JotunnModStub/p2.c JotunnModStub/packages.config
-          sed -e 's/packages\\JotunnLib\..*\\/packages\\JotunnLib.${{ steps.get_version.outputs.VERSION_NUMBER }}\\/' -e 's/JotunnLib, Version=.* Culture/JotunnLib, Version=${{ steps.get_version.outputs.VERSION_WITHOUT_BETA }}.0, Culture/' JotunnModStub/JotunnModStub.csproj > JotunnModStub/csproj && mv JotunnModStub/csproj JotunnModStub/JotunnModStub.csproj
+          sed -e 's/\\JotunnLib\.[0-9][^\\]*/\\JotunnLib.${{ steps.get_version.outputs.VERSION_NUMBER }}/g' -e 's/JotunnLib, Version=.* Culture/JotunnLib, Version=${{ steps.get_version.outputs.VERSION_WITHOUT_BETA }}.0, Culture/' JotunnModStub/JotunnModStub.csproj > JotunnModStub/csproj && mv JotunnModStub/csproj JotunnModStub/JotunnModStub.csproj
 
       # Install NuGet dependencies
       - name: Install NuGet dependencies
