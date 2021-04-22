@@ -11,14 +11,14 @@ using BepInEx.Configuration;
 namespace JotunnModStub
 {
     [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
-    [BepInDependency(JotunnLib.Main.ModGuid)]
+    [BepInDependency(Jotunn.Main.ModGuid)]
     //[NetworkCompatibilty(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Minor)]
     internal class JotunnModStub : BaseUnityPlugin
     {
         public const string PluginGUID = "com.jotunn.jotunnmodstub";
         public const string PluginName = "JotunnModStub";
         public const string PluginVersion = "0.0.1";
-        public static new JotunnLib.Logger Logger;
+        public static new Jotunn.Logger Logger;
 
         private void Awake()
         {
