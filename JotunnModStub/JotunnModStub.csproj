@@ -111,4 +111,10 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\JotunnLib.1.0.1-rc6\build\JotunnLib.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\JotunnLib.1.0.1-rc6\build\JotunnLib.props'))" />
   </Target>
+  <Target Name="EnsureEnvironmentPropsImport" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project needs a Environment.props file with the path to your Valheim installation. See https://github.com/Valheim-Modding/JotunnModStub. {0} is missing.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)Environment.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)Environment.props'))" />
+  </Target>
 </Project>
