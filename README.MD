@@ -4,7 +4,7 @@ A Valheim mod stub project using [JötunnLib](https://github.com/Valheim-Modding
 
 # Quick Setup Guide
 
-These are quick setup steps with no context provided. Please see [Github Pages](https://valheim-modding.github.io/Jotunn/tutorials/getting-started.html) for more in depth documentation.
+These are quick setup steps with no context provided. Please see [Github Pages](https://valheim-modding.github.io/Jotunn/home/home.html) for more in depth documentation.
 
 ## Development Environment Setup
 
@@ -13,8 +13,6 @@ How to setup the development enviroment for this project.
 1. Install [Visual Studio 2019](https://visualstudio.microsoft.com) and add the C# workload.
 2. Download this package: [BepInEx pack for Valheim](https://valheim.thunderstore.io/package/1F31A/BepInEx_Valheim_Full/)
 3. Unpack into your Valheim root folder. You should now see a new folder called `<ValheimDir>\unstripped_corlib` and more additional stuff.
-4. [Compile](https://github.com/CabbageCrow/AssemblyPublicizer) or [Download](https://github.com/CabbageCrow/AssemblyPublicizer/releases) AssemblyPublicizers executable version. This will result in a new executable `AssemblyPublicizer.exe`.
-5. Drag and drop all `assembly_*.dll` files from `<ValheimDir>\valheim_Data\Managed` onto `AssemblyPublicizer.exe`. You should get a new folder `<ValheimDir>\valheim_Data\Managed\publicized_assemblies` with all dragged dll files in it.
 6. Fork and clone this repository using git. That should create a new folder `JotunnModStub`.
 7. Create a new environment file `Environment.props` in the projects base path `<JotunnModStub>`. Paste this snippet and change the path according to your local Valheim installation.
 ```xml
