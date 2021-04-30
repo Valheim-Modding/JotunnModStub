@@ -31,7 +31,7 @@ How to setup the development enviroment for this project.
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <StartAction>Program</StartAction>
     <!-- Start valheim.exe after building Debug-->
-    <StartProgram>$(ValheimDir)\valheim.exe</StartProgram>
+    <StartProgram>$(VALHEIM_INSTALL)\valheim.exe</StartProgram>
     <!-- If you want to connect to a server automatically, add '+connect <ip-address>:<port>' as StartArguments -->
     <StartArguments>-console</StartArguments>
   </PropertyGroup>
