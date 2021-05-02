@@ -1,19 +1,19 @@
 # JötunnModStub
 
-A Valheim mod stub project using [JötunnLib](https://github.com/Valheim-Modding/Jotunn) including build tools for debugging your code in Visual Studio and a basic Unity project stub. There is no actual plugin content included, just a bare minimum plugin class. 
+A Valheim mod stub project using [Jötunn](https://github.com/Valheim-Modding/Jotunn) including build tools for debugging your code in Visual Studio and a basic Unity project stub. There is no actual plugin content included, just a bare minimum plugin class. 
 
 # Quick Setup Guide
 
-These are quick setup steps with no context provided. Please see [Github Pages](https://valheim-modding.github.io/Jotunn/home/home.html) for more in depth documentation.
+These are quick setup steps with no context provided. Please see Jötunns [Github Pages](https://valheim-modding.github.io/Jotunn/home/home.html) for more in depth documentation.
 
 ## Development Environment Setup
 
 How to setup the development enviroment for this project.
 
 1. Install [Visual Studio 2019](https://visualstudio.microsoft.com) and add the C# workload.
-2. Download this package: [BepInEx pack for Valheim](https://valheim.thunderstore.io/package/1F31A/BepInEx_Valheim_Full/)
+2. Download this package: [BepInEx pack for Valheim](https://valheim.thunderstore.io/package/denikson/BepInExPack_Valheim/)
 3. Unpack into your Valheim root folder. You should now see a new folder called `<ValheimDir>\unstripped_corlib` and more additional stuff.
-6. Fork and clone this repository using git. That should create a new folder `JotunnModStub`.
+6. Fork and clone this repository using git. That should create a new folder `JotunnModStub`. You can also [generate a new github repo from this repo](https://github.com/Valheim-Modding/JotunnModStub/generate) to create a new, clean repo out of it and clone that.
 7. Create a new environment file `Environment.props` in the projects base path `<JotunnModStub>`. Paste this snippet and change the path according to your local Valheim installation.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -24,21 +24,8 @@ How to setup the development enviroment for this project.
   </PropertyGroup>
 </Project>
 ```
-7. Create a new user project file `JotunnModStub.csproj.user` alongside the project file within `<JotunnModStub>\JotunnModStub` if you want to start Valheim directly after building Debug. Paste this snippet into the file.
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartAction>Program</StartAction>
-    <!-- Start valheim.exe after building Debug-->
-    <StartProgram>$(VALHEIM_INSTALL)\valheim.exe</StartProgram>
-    <!-- If you want to connect to a server automatically, add '+connect <ip-address>:<port>' as StartArguments -->
-    <StartArguments>-console</StartArguments>
-  </PropertyGroup>
-</Project>
-```
 8. Open the Solution file `<JotunnModStub>\JotunnModStub.sln`. Right-click on the project or solution in the Solution Explorer and select `Manage NuGet packages...`. It should prompt you a message at the top that some NuGet-Packages are missing. Click "Restore" and restart Visual Studio when finished.
-9. Rename the Solution/Project and everything related so that it resembles your own projects name.
+9. Rename the Solution/Project and everything related so that it resembles your own projects name. This includes the assembly information as well as the Unity project.
 
 ### Build automations
 
@@ -52,7 +39,7 @@ Included in this repo is a PowerShell script `publish.ps1`. The script is refere
 
 ### Building Release
 
-* A compressed file with the binaries is created in `<JotunnModStub>\Packages`ready for upload to ThunderStore.
+* A compressed file with the binaries is created in `<JotunnModStub>\Packages`ready for upload to ThunderStore. Dont forget to include your information in the manifest.json and to change this readme file.
 
 ## Developing Assets with Unity
 
@@ -99,8 +86,7 @@ When Valheim updates it is likely that parts of the assembly files change. If th
 
 ### Visual Studio actions
 
-1. Make new versions of the publicized assemblies as described in [Development Environment Setup] step 5.
-2. Go to VS and clean/build (or just rebuild) the project.
+1. There is a file called DoPrebuild.props included in this repo. When you set its only value to true, Jötunn will automatically generate publicized and MMHook assemblies for you. Otherwise you have to do this stap manually.
 
 ### Unity actions
 
