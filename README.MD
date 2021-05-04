@@ -86,9 +86,10 @@ When Valheim updates it is likely that parts of the assembly files change. If th
 
 ### Visual Studio actions
 
-1. There is a file called DoPrebuild.props included in this repo. When you set its only value to true, Jötunn will automatically generate publicized and MMHook assemblies for you. Otherwise you have to do this stap manually.
+1. There is a file called DoPrebuild.props included in the solution. When you set its only value to true, Jötunn will automatically generate publicized and MMHook assemblies for you. Otherwise you have to do this step manually.
 
 ### Unity actions
 
-1. Copy all original `assembly_*.dll` as described in [Unity Editor Setup] step 6 and 7.
+1. Copy all `assembly_*.dll` from `<ValheimDir>\valheim_Data\Managed` into `<JotunnModStub>\JotunnModUnity\Assets\Assemblies`. <br />
+  **Do this directly in the filesystem - don't import the dlls in Unity**.
 2. Go to Unity Editor and press `Ctrl+R`. This reloads all files from the filesystem and "re-imports" the copied dlls into the project.
