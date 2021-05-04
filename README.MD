@@ -54,6 +54,7 @@ New Assets can be created with Unity and imported into Valheim using the mod. A 
 5. Install the `AssetBundle Browser` package in the Unity Editor via `Window`-> `Package Manager`.
 6. Copy all `assembly_*.dll` from `<ValheimDir>\valheim_Data\Managed` into `<JotunnModStub>\JotunnModUnity\Assets\Assemblies`. **Do this directly in the filesystem - don't import the dlls in Unity**.
 7. Go back to the Unity Editor and press `Ctrl+R`. This should reload all files and add the Valheim assemblies under `Assets\Assemblies`
+8. **Warning:** These assembly files are copyrighted material and you can theoretically get into trouble when you distribute them in your github repository. To avoid that there is a .gitignore file in the Unity project folder. Keep that when you clone or copy this repository.
 
 ## Debugging with dnSpy
 
