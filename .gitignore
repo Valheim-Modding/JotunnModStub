@@ -370,3 +370,6 @@ FodyWeavers.xsd
 
 # not the valheim path file
 Environment.props
+
+# not the generated dll for thunderstore
+*/Package/plugins/*
