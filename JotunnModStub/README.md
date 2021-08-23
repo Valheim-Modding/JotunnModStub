@@ -1,5 +1,5 @@
 ﻿# JotunnModStub
-Upon building for release, this README.md is copied from `ProjectRoot/Package/` into `ProjectRoot/` such that the readme is displayed when the project is viewed via github. Make sure to edit the README.md inside the package directory, and not the project root as your changes will be overwritten.
+Upon building for release, this README.md is copied into the `Package` folder for thunderstore packaging. Remember to also edit the manifest.json and supply your own mod icon.
 
 ## Installation (manual)
 
