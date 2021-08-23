@@ -5,8 +5,6 @@
 // Project: JotunnModStub
 
 using BepInEx;
-using BepInEx.Configuration;
-using UnityEngine;
 
 namespace JotunnModStub
 {
@@ -21,25 +19,27 @@ namespace JotunnModStub
 
         private void Awake()
         {
-            // Do all your init stuff here
-
-            // Acceptable value ranges can be defined to allow configuration via a slider in the BepInEx ConfigurationManager:
-            // https://github.com/BepInEx/BepInEx.ConfigurationManager
-            Config.Bind<int>("Main Section", "Example configuration integer", 1, 
-                new ConfigDescription("This is an example config, using a range limitation for ConfigurationManager", 
-                new AcceptableValueRange<int>(0, 100)));
-
+            // Jotunn comes with MonoMod Detours enabled for hooking Valheim's code
+            // https://github.com/MonoMod/MonoMod
+            On.FejdStartup.Awake += FejdStartup_Awake;
+            
             // Jotunn comes with its own Logger class to provide a consistent Log style for all mods using it
             Jotunn.Logger.LogInfo("ModStub has landed");
+            
+            // To learn more about Jotunn's features, go to
+            // https://valheim-modding.github.io/Jotunn/tutorials/overview.html
         }
 
-#if DEBUG
-        private void Update()
+        private void FejdStartup_Awake(On.FejdStartup.orig_Awake orig, FejdStartup self)
         {
-            if (Input.GetKeyDown(KeyCode.F6))
-            { // Set a breakpoint here to break on F6 key press
-            }
+            // This code runs before Valheim's FejdStartup.Awake
+            Jotunn.Logger.LogInfo("FejdStartup is going to awake");
+
+            // Call this method so the original game method is invoked
+            orig(self);
+
+            // This code runs after Valheim's FejdStartup.Awake
+            Jotunn.Logger.LogInfo("FejdStartup has awoken");
         }
-#endif
     }
 }
