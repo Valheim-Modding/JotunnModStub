@@ -74,7 +74,7 @@ crashlytics-build.properties
 /[Aa]ssets/[Aa]ssemblies/*.dll
 
 # Vanilla scripts (dont distribute!)
-/[Aa]ssets/[Vv]anilla[Ss]cripts/*
+/[Aa]ssets/[Vv]anilla[Ss]cripts/**/
 
 # AssetBundles (manual copy these)
 /[Aa]ssetBundles*
