@@ -5,6 +5,8 @@
 // Project: JotunnModStub
 
 using BepInEx;
+using Jotunn.Entities;
+using Jotunn.Managers;
 
 namespace JotunnModStub
 {
@@ -16,6 +18,10 @@ namespace JotunnModStub
         public const string PluginGUID = "com.jotunn.jotunnmodstub";
         public const string PluginName = "JotunnModStub";
         public const string PluginVersion = "0.0.1";
+        
+        // Use this class to add your own localization to the game
+        // https://valheim-modding.github.io/Jotunn/tutorials/localization.html
+        public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
 
         private void Awake()
         {
