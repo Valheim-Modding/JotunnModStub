@@ -76,5 +76,8 @@ crashlytics-build.properties
 # Vanilla scripts (dont distribute!)
 /[Aa]ssets/[Vv]anilla[Ss]cripts/**/
 
+# Installed plugins (might be paid stuff, so dont distribute)
+/[Aa]ssets/Plugins*
+
 # AssetBundles (manual copy these)
 /[Aa]ssetBundles*
