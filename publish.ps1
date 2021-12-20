@@ -13,7 +13,9 @@ param(
     [System.String]$ValheimPath,
 
     [Parameter(Mandatory)]
-    [System.String]$ProjectPath
+    [System.String]$ProjectPath,
+    
+    [System.String]$DeployPath
 )
 
 # Make sure Get-Location is the script path
@@ -41,20 +43,21 @@ if (Test-Path -Path "$pdb") {
 Write-Host "Publishing for $Target from $TargetPath"
 
 if ($Target.Equals("Debug")) {
-    Write-Host "Updating local installation in $ValheimPath"
-    
-    $plug = New-Item -Type Directory -Path "$ValheimPath\BepInEx\plugins\$name" -Force
-    Write-Host "Copy $TargetAssembly to $plug"
-    Copy-Item -Path "$TargetPath\$name.dll" -Destination "$plug" -Force
-    Copy-Item -Path "$TargetPath\$name.pdb" -Destination "$plug" -Force
-    Copy-Item -Path "$TargetPath\$name.dll.mdb" -Destination "$plug" -Force
-    
     $mono = "$ValheimPath\MonoBleedingEdge\EmbedRuntime";
     Write-Host "Copy mono-2.0-bdwgc.dll to $mono"
     if (!(Test-Path -Path "$mono\mono-2.0-bdwgc.dll.orig")) {
         Copy-Item -Path "$mono\mono-2.0-bdwgc.dll" -Destination "$mono\mono-2.0-bdwgc.dll.orig" -Force
     }
     Copy-Item -Path "$(Get-Location)\libraries\Debug\mono-2.0-bdwgc.dll" -Destination "$mono" -Force
+    
+    if ($DeployPath.Equals("")){
+      $DeployPath = "$ValheimPath\BepInEx\plugins"
+    }
+    $plug = New-Item -Type Directory -Path "$DeployPath\$name" -Force
+    Write-Host "Copy $TargetAssembly to $plug"
+    Copy-Item -Path "$TargetPath\$name.dll" -Destination "$plug" -Force
+    Copy-Item -Path "$TargetPath\$name.pdb" -Destination "$plug" -Force
+    Copy-Item -Path "$TargetPath\$name.dll.mdb" -Destination "$plug" -Force
     
     # set dnspy debugger env
     #$dnspy = '--debugger-agent=transport=dt_socket,server=y,address=127.0.0.1:56000,suspend=y,no-hide-debugger'
@@ -68,7 +71,7 @@ if($Target.Equals("Release")) {
 
     Write-Host "$PackagePath\$TargetAssembly"
     Copy-Item -Path "$TargetPath\$TargetAssembly" -Destination "$PackagePath\plugins\$TargetAssembly" -Force
-    Copy-Item -Path "$ProjectPath\README.md" -Destination "$PackagePath\README.md" -Force
+    Copy-Item -Path "$PackagePath\README.md" -Destination "$ProjectPath\README.md" -Force
     Compress-Archive -Path "$PackagePath\*" -DestinationPath "$TargetPath\$TargetAssembly.zip" -Force
 }
 

@@ -10,7 +10,7 @@ These are quick setup steps with no context provided. Please see Jötunns [Githu
 
 How to setup the development enviroment for this project.
 
-1. Install [Visual Studio 2019](https://visualstudio.microsoft.com) and add the C# workload.
+1. Install [Visual Studio 2022](https://visualstudio.microsoft.com) and add the C# workload.
 2. Download this package: [BepInEx pack for Valheim](https://valheim.thunderstore.io/package/denikson/BepInExPack_Valheim/)
 3. Unpack into your Valheim root folder. You should now see a new folder called `<ValheimDir>\unstripped_corlib` and more additional stuff.
 6. Fork and clone this repository using git. That should create a new folder `JotunnModStub`. You can also [use the template function of github](https://github.com/Valheim-Modding/JotunnModStub/generate) to create a new, clean repo out of it and clone that.
@@ -21,6 +21,8 @@ How to setup the development enviroment for this project.
   <PropertyGroup>
     <!-- Needs to be your path to the base Valheim folder -->
     <VALHEIM_INSTALL>F:\Steam\steamapps\common\Valheim</VALHEIM_INSTALL>
+    <!-- This is the folder where your build gets copied to when using the post-build automations -->
+    <MOD_DEPLOYPATH>$(VALHEIM_INSTALL)\BepInEx\plugins</MOD_DEPLOYPATH>
   </PropertyGroup>
 </Project>
 ```
