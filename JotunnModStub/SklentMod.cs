@@ -7,6 +7,7 @@
 using BepInEx;
 using Jotunn.Entities;
 using Jotunn.Managers;
+using Jotunn.Configs;
 
 namespace SklentMod
 {
@@ -25,13 +26,15 @@ namespace SklentMod
 
         private void Awake()
         {
+            AddRecipes();
+
             // Jotunn comes with MonoMod Detours enabled for hooking Valheim's code
             // https://github.com/MonoMod/MonoMod
             On.FejdStartup.Awake += FejdStartup_Awake;
             
             // Jotunn comes with its own Logger class to provide a consistent Log style for all mods using it
-            Jotunn.Logger.LogInfo("ModStub has landed");
-            
+            Jotunn.Logger.LogInfo("SklentMod has landed");
+
             // To learn more about Jotunn's features, go to
             // https://valheim-modding.github.io/Jotunn/tutorials/overview.html
         }
@@ -46,6 +49,22 @@ namespace SklentMod
 
             // This code runs after Valheim's FejdStartup.Awake
             Jotunn.Logger.LogInfo("FejdStartup has awoken");
+        }
+
+        // Add custom recipes
+        private void AddRecipes()
+        {
+            // Create a custom recipe with a RecipeConfig
+            CustomRecipe meatRecipe = new CustomRecipe(new RecipeConfig()
+            {
+                Item = "CookedMeat",                    // Name of the item prefab to be crafted
+                Requirements = new RequirementConfig[]  // Resources and amount needed for it to be crafted
+                {
+            new RequirementConfig { Item = "Stone", Amount = 2 },
+            new RequirementConfig { Item = "Wood", Amount = 1 }
+                }
+            });
+            ItemManager.Instance.AddRecipe(meatRecipe);
         }
     }
 }
