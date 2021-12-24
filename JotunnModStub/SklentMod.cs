@@ -1,13 +1,9 @@
-﻿// SklentMod
-// a Valheim mod skeleton using Jötunn
-// 
-// File:    SklentMod.cs
-// Project: SklentMod
-
-using BepInEx;
+﻿using BepInEx;
 using Jotunn.Entities;
 using Jotunn.Managers;
 using Jotunn.Configs;
+using System.Collections.Generic;
+using System;
 
 namespace SklentMod
 {
@@ -19,24 +15,88 @@ namespace SklentMod
         public const string PluginGUID = "com.sklent";
         public const string PluginName = "SklentMod";
         public const string PluginVersion = "0.0.1";
-        
-        // Use this class to add your own localization to the game
-        // https://valheim-modding.github.io/Jotunn/tutorials/localization.html
+
         public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
 
         private void Awake()
         {
+            AddLocalizations();
+            PrefabManager.OnVanillaPrefabsAvailable += AddItems;
             AddRecipes();
 
-            // Jotunn comes with MonoMod Detours enabled for hooking Valheim's code
-            // https://github.com/MonoMod/MonoMod
             On.FejdStartup.Awake += FejdStartup_Awake;
-            
-            // Jotunn comes with its own Logger class to provide a consistent Log style for all mods using it
             Jotunn.Logger.LogInfo("SklentMod has landed");
+        }
+        private void AddLocalizations()
+        {
+            Localization.AddTranslation("English", new Dictionary<string, string>
+            {
+                {"item_keefcakedough", "Keef Cake Dough"}, {"item_keefcakedough_desc", "keeeefy"},
+                {"item_keefcake", "Keef Cake"}, {"item_keefcake_desc", "eat me ;)"}
 
-            // To learn more about Jotunn's features, go to
-            // https://valheim-modding.github.io/Jotunn/tutorials/overview.html
+            });
+        }
+
+        // Implementation of cloned items
+        private void AddItems()
+        {
+            try
+            {
+                CustomItem keefDough = new CustomItem("KeefCakeDough", "BreadDough");
+                ItemManager.Instance.AddItem(keefDough);
+                var doughDrop = keefDough.ItemDrop;
+                doughDrop.m_itemData.m_shared.m_name = "$item_keefcakedough";
+                doughDrop.m_itemData.m_shared.m_description = "$item_keefcakedough_desc";
+
+                CustomItem keefCake = new CustomItem("KeefCake", "Bread");
+                ItemManager.Instance.AddItem(keefCake);
+                var keefCakeDrop = keefCake.ItemDrop;
+                keefCakeDrop.m_itemData.m_shared.m_name = "$item_keefcake";
+                keefCakeDrop.m_itemData.m_shared.m_description = "$item_keefcake_desc";
+                keefCakeDrop.m_itemData.m_shared.m_food = 0;
+                keefCakeDrop.m_itemData.m_shared.m_foodRegen = 0;
+                keefCakeDrop.m_itemData.m_shared.m_foodStamina = 90;
+                keefCakeDrop.m_itemData.m_shared.m_foodColor = UnityEngine.Color.black;
+                keefCakeDrop.m_itemData.m_shared.m_maxStackSize = 3;
+            }
+            catch (Exception ex)
+            {
+                Jotunn.Logger.LogError($"Error while adding cloned item: {ex.Message}");
+            }
+            finally
+            {
+                // You want that to run only once, Jotunn has the item cached for the game session
+                PrefabManager.OnVanillaPrefabsAvailable -= AddItems;
+            }
+        }
+
+
+        // Add custom recipes
+        private void AddRecipes()
+        {
+            CustomRecipe keefDough = new CustomRecipe(new RecipeConfig()
+            {
+                Item = "KeefCakeDough",
+                Requirements = new RequirementConfig[]
+                {
+                    new RequirementConfig { Item = "BarleyFlour", Amount = 1 },
+                    new RequirementConfig { Item = "Honey", Amount = 1 },
+                    new RequirementConfig { Item = "Tar", Amount = 1 }
+                },
+                CraftingStation = "	piece_cauldron",
+            });
+            ItemManager.Instance.AddRecipe(keefDough);
+
+            CustomRecipe keef = new CustomRecipe(new RecipeConfig()
+            {
+                Item = "KeefCake",
+                Requirements = new RequirementConfig[]
+               {
+                    new RequirementConfig { Item = "KeefCakeDough", Amount = 1 },
+               },
+               CraftingStation = "piece_oven",
+            });
+            ItemManager.Instance.AddRecipe(keef);
         }
 
         private void FejdStartup_Awake(On.FejdStartup.orig_Awake orig, FejdStartup self)
@@ -49,22 +109,6 @@ namespace SklentMod
 
             // This code runs after Valheim's FejdStartup.Awake
             Jotunn.Logger.LogInfo("FejdStartup has awoken");
-        }
-
-        // Add custom recipes
-        private void AddRecipes()
-        {
-            // Create a custom recipe with a RecipeConfig
-            CustomRecipe meatRecipe = new CustomRecipe(new RecipeConfig()
-            {
-                Item = "CookedMeat",                    // Name of the item prefab to be crafted
-                Requirements = new RequirementConfig[]  // Resources and amount needed for it to be crafted
-                {
-            new RequirementConfig { Item = "Stone", Amount = 2 },
-            new RequirementConfig { Item = "Wood", Amount = 1 }
-                }
-            });
-            ItemManager.Instance.AddRecipe(meatRecipe);
         }
     }
 }
