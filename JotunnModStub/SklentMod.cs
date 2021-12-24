@@ -1,22 +1,22 @@
-﻿// JotunnModStub
+﻿// SklentMod
 // a Valheim mod skeleton using Jötunn
 // 
-// File:    JotunnModStub.cs
-// Project: JotunnModStub
+// File:    SklentMod.cs
+// Project: SklentMod
 
 using BepInEx;
 using Jotunn.Entities;
 using Jotunn.Managers;
 
-namespace JotunnModStub
+namespace SklentMod
 {
     [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
     [BepInDependency(Jotunn.Main.ModGuid)]
     //[NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Minor)]
-    internal class JotunnModStub : BaseUnityPlugin
+    internal class SklentMod : BaseUnityPlugin
     {
         public const string PluginGUID = "com.sklent";
-        public const string PluginName = "KeefCafe";
+        public const string PluginName = "SklentMod";
         public const string PluginVersion = "0.0.1";
         
         // Use this class to add your own localization to the game

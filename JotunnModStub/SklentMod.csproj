@@ -82,7 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\IgnoreAccessModifiers.cs" />
-    <Compile Include="JotunnModStub.cs" />
+    <Compile Include="SklentMod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
