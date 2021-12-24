@@ -15,8 +15,8 @@ namespace JotunnModStub
     //[NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Minor)]
     internal class JotunnModStub : BaseUnityPlugin
     {
-        public const string PluginGUID = "com.jotunn.jotunnmodstub";
-        public const string PluginName = "JotunnModStub";
+        public const string PluginGUID = "com.sklent";
+        public const string PluginName = "KeefCafe";
         public const string PluginVersion = "0.0.1";
         
         // Use this class to add your own localization to the game
