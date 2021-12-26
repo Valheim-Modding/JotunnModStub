@@ -81,6 +81,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MyInventoryGui.cs" />
     <Compile Include="MyInventoryGrid.cs" />
     <Compile Include="Properties\IgnoreAccessModifiers.cs" />
     <Compile Include="SklentMod.cs" />

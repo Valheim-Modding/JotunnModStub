@@ -23,6 +23,7 @@ namespace SklentMod
         public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
         internal Harmony harmony;
         internal Assembly assembly;
+        public static GameObject inventoryPanel;
 
         public void Main()
         {
@@ -58,41 +59,6 @@ namespace SklentMod
         {
             try
             {
-
-                //var Ocape = PrefabManager.Instance.GetPrefab("CapeOdin");
-                //var neckDrop = PrefabManager.Instance.GetPrefab("Neck").GetComponent<CharacterDrop>();
-                //neckDrop.m_drops.Add(new CharacterDrop.Drop
-                //{
-                //    m_amountMax = 1,
-                //    m_amountMin = 1,
-                //    m_chance = 100,
-                //    m_levelMultiplier = false,
-                //    m_onePerPlayer = false,
-                //    m_prefab = Ocape
-                //});
-                //var Ohelm = PrefabManager.Instance.GetPrefab("HelmetOdin");
-                //neckDrop.m_drops.Add(new CharacterDrop.Drop
-                //{
-                //    m_amountMax = 1,
-                //    m_amountMin = 1,
-                //    m_chance = 100,
-                //    m_levelMultiplier = false,
-                //    m_onePerPlayer = false,
-                //    m_prefab = Ohelm
-                //});
-                //var Otank = PrefabManager.Instance.GetPrefab("TankardOdin");
-                //neckDrop.m_drops.Add(new CharacterDrop.Drop
-                //{
-                //    m_amountMax = 1,
-                //    m_amountMin = 1,
-                //    m_chance = 100,
-                //    m_levelMultiplier = false,
-                //    m_onePerPlayer = false,
-                //    m_prefab = Otank
-                //});
-
-
-
                 CustomItem keefDough = new CustomItem("KeefCakeDough", "BreadDough");
                 ItemManager.Instance.AddItem(keefDough);
                 var doughDrop = keefDough.ItemDrop;
