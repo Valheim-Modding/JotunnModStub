@@ -4,6 +4,10 @@ using Jotunn.Managers;
 using Jotunn.Configs;
 using System.Collections.Generic;
 using System;
+using HarmonyLib;
+using UnityEngine;
+using System.IO;
+using System.Reflection;
 
 namespace SklentMod
 {
@@ -17,16 +21,28 @@ namespace SklentMod
         public const string PluginVersion = "0.0.1";
 
         public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
+        internal Harmony harmony;
+        internal Assembly assembly;
+
+        public void Main()
+        {
+            harmony = new Harmony(PluginGUID);
+            assembly = Assembly.GetExecutingAssembly();
+        }
+
+        public void Start()
+        {
+            harmony.PatchAll(assembly);
+        }
 
         private void Awake()
         {
             AddLocalizations();
             PrefabManager.OnVanillaPrefabsAvailable += AddItems;
-            AddRecipes();
-
             On.FejdStartup.Awake += FejdStartup_Awake;
             Jotunn.Logger.LogInfo("SklentMod has landed");
         }
+
         private void AddLocalizations()
         {
             Localization.AddTranslation("English", new Dictionary<string, string>
@@ -42,6 +58,41 @@ namespace SklentMod
         {
             try
             {
+
+                //var Ocape = PrefabManager.Instance.GetPrefab("CapeOdin");
+                //var neckDrop = PrefabManager.Instance.GetPrefab("Neck").GetComponent<CharacterDrop>();
+                //neckDrop.m_drops.Add(new CharacterDrop.Drop
+                //{
+                //    m_amountMax = 1,
+                //    m_amountMin = 1,
+                //    m_chance = 100,
+                //    m_levelMultiplier = false,
+                //    m_onePerPlayer = false,
+                //    m_prefab = Ocape
+                //});
+                //var Ohelm = PrefabManager.Instance.GetPrefab("HelmetOdin");
+                //neckDrop.m_drops.Add(new CharacterDrop.Drop
+                //{
+                //    m_amountMax = 1,
+                //    m_amountMin = 1,
+                //    m_chance = 100,
+                //    m_levelMultiplier = false,
+                //    m_onePerPlayer = false,
+                //    m_prefab = Ohelm
+                //});
+                //var Otank = PrefabManager.Instance.GetPrefab("TankardOdin");
+                //neckDrop.m_drops.Add(new CharacterDrop.Drop
+                //{
+                //    m_amountMax = 1,
+                //    m_amountMin = 1,
+                //    m_chance = 100,
+                //    m_levelMultiplier = false,
+                //    m_onePerPlayer = false,
+                //    m_prefab = Otank
+                //});
+
+
+
                 CustomItem keefDough = new CustomItem("KeefCakeDough", "BreadDough");
                 ItemManager.Instance.AddItem(keefDough);
                 var doughDrop = keefDough.ItemDrop;
@@ -58,10 +109,14 @@ namespace SklentMod
                 keefCakeDrop.m_itemData.m_shared.m_foodStamina = 90;
                 keefCakeDrop.m_itemData.m_shared.m_foodColor = UnityEngine.Color.black;
                 keefCakeDrop.m_itemData.m_shared.m_maxStackSize = 3;
+
+                AddRecipes();
             }
             catch (Exception ex)
             {
                 Jotunn.Logger.LogError($"Error while adding cloned item: {ex.Message}");
+                Jotunn.Logger.LogError(ex);
+                Jotunn.Logger.LogError(ex.StackTrace); 
             }
             finally
             {
@@ -74,6 +129,18 @@ namespace SklentMod
         // Add custom recipes
         private void AddRecipes()
         {
+            CustomRecipe odinCape = new CustomRecipe(new RecipeConfig()
+            {
+                Item = "SwordIronFire",
+                Requirements = new RequirementConfig[]
+                {
+                    new RequirementConfig { Item = "Wood", Amount = 1 },
+                },
+                CraftingStation = "forge",
+            });
+            ItemManager.Instance.AddRecipe(odinCape);
+
+
             CustomRecipe keefDough = new CustomRecipe(new RecipeConfig()
             {
                 Item = "KeefCakeDough",
@@ -83,7 +150,7 @@ namespace SklentMod
                     new RequirementConfig { Item = "Honey", Amount = 1 },
                     new RequirementConfig { Item = "Tar", Amount = 1 }
                 },
-                CraftingStation = "	piece_cauldron",
+                CraftingStation = "piece_cauldron",
             });
             ItemManager.Instance.AddRecipe(keefDough);
 
@@ -94,7 +161,7 @@ namespace SklentMod
                {
                     new RequirementConfig { Item = "KeefCakeDough", Amount = 1 },
                },
-               CraftingStation = "piece_oven",
+                CraftingStation = "piece_cauldron",
             });
             ItemManager.Instance.AddRecipe(keef);
         }
