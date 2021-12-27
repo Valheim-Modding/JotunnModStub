@@ -32,19 +32,9 @@ namespace JotunnModStub
         private static void PatchShow(ref InventoryGui __instance, Container container)
         {
             Jotunn.Logger.LogInfo("InventoryGui Show..");
-            if (__instance == null)
-            {
-                Jotunn.Logger.LogInfo("instance null");
-            }
-            else { Jotunn.Logger.LogInfo("not null"); }
-            InventoryGrid inventoryGrid = __instance.m_playerGrid;
-            if (inventoryGrid == null)
-            {
-                Jotunn.Logger.LogInfo("inventoryGrid instance null");
-            }
-            else { Jotunn.Logger.LogInfo("inventoryGrid not null"); }
-            //Jotunn.Logger.LogInfo("Inventory Weight: " + inventoryGrid.m_inventory.m_totalWeight);
-            addCustomInventoryGui(__instance.m_playerGrid);
+            // Organize twice to fix an issue
+            organizeInventory(__instance.m_playerGrid);
+            organizeInventory(__instance.m_playerGrid);
         }
 
         public static void closeCustomGui(GameObject panel)
@@ -74,13 +64,6 @@ namespace JotunnModStub
             //Jotunn.Logger.LogInfo("InventoryGui Update");
         }
 
-        //[HarmonyPostfix]
-        //[HarmonyPatch(typeof(InventoryGui), "OnDestory")]
-        //private static void PatchOnDestroy(ref InventoryGui __instance)
-        //{
-        //    Jotunn.Logger.LogInfo("InventoryGui OnDestory");
-        //}
-
         [HarmonyPostfix]
         [HarmonyPatch(typeof(InventoryGui), "UpdateInventory")]
         private static void PatchUpdateInventory(ref InventoryGui __instance, Player player)
@@ -109,87 +92,34 @@ namespace JotunnModStub
             Jotunn.Logger.LogInfo("InventoryGui OnDropOutside");
         }
 
-        private static void addCustomInventoryGui(InventoryGrid inventoryGrid)
-        {
-            SklentMod.SklentMod.inventoryPanel = GUIManager.Instance.CreateWoodpanel(
-                parent: GUIManager.CustomGUIFront.transform,
-                anchorMin: new Vector2(0.5f, 0.5f),
-                anchorMax: new Vector2(0.5f, 0.5f),
-                position: new Vector2(0f, 0f),
-                width: 500f,
-                height: 300f,
-                draggable: true);
-            var textObject = GUIManager.Instance.CreateText(
-                text: "SklentMod",
-                parent: SklentMod.SklentMod.inventoryPanel.transform,
-                anchorMin: new Vector2(0.5f, 1f),
-                anchorMax: new Vector2(0.5f, 1f),
-                position: new Vector2(0f, 0f),
-                font: GUIManager.Instance.AveriaSerifBold,
-                fontSize: 20,
-                color: GUIManager.Instance.ValheimOrange,
-                outline: true,
-                outlineColor: Color.black,
-                width: 350f,
-                height: 40f,
-                addContentSizeFitter: false);
-            var textObject2 = GUIManager.Instance.CreateText(
-                text: "Hello",
-                parent: SklentMod.SklentMod.inventoryPanel.transform,
-                anchorMin: new Vector2(0.5f, 1f),
-                anchorMax: new Vector2(0.5f, 1f),
-                position: new Vector2(0f, -100f),
-                font: GUIManager.Instance.AveriaSerifBold,
-                fontSize: 20,
-                color: GUIManager.Instance.ValheimOrange,
-                outline: true,
-                outlineColor: Color.black,
-                width: 350f,
-                height: 40f,
-                addContentSizeFitter: false);
-            var btnClose = GUIManager.Instance.CreateButton(
-                text: "x",
-                parent: SklentMod.SklentMod.inventoryPanel.transform,
-                anchorMin: new Vector2(0.5f, 1f),
-                anchorMax: new Vector2(0.5f, 1f),
-                position: new Vector2(55f, -100f)
-                );
-            var btnOrganize = GUIManager.Instance.CreateButton(
-                text: "Organize inventory",
-                parent: SklentMod.SklentMod.inventoryPanel.transform,
-                anchorMin: new Vector2(0.3f, 0.5f),
-                anchorMax: new Vector2(0.3f, 0.5f),
-                position: new Vector2(50f, -50f)
-                );
-            Button buttonClose = btnClose.GetComponent<Button>();
-            buttonClose.onClick.AddListener(() => closeCustomGui(SklentMod.SklentMod.inventoryPanel));
-            Button buttonOrganize = btnOrganize.GetComponent<Button>();
-            if (inventoryGrid == null)
-            {
-                Jotunn.Logger.LogInfo("inventoryGrid instance null2");
-            }
-            else { Jotunn.Logger.LogInfo("inventoryGrid not null2"); }
-            buttonOrganize.onClick.AddListener(() => organizeInventory(inventoryGrid));
-        }
-
         private static void organizeInventory(InventoryGrid __instance)
         {
+
+            List<String> seenItemNames = new List<String>();
+
             List<ItemDrop.ItemData> equipment = new List<ItemDrop.ItemData>();
             List<ItemDrop.ItemData> consumables = new List<ItemDrop.ItemData>();
             List<ItemDrop.ItemData> bsItemsInEquipBar = new List<ItemDrop.ItemData>();
+            HashSet<String> combinable = new HashSet<String>();
             foreach (ItemDrop.ItemData item in __instance.GetInventory().GetAllItems())
             {
-
                 if (item.m_gridPos.y != 0)
                 {
                     if (item.IsEquipable())
                     {
                         equipment.Add(item);
-
                     }
                     if (item.m_shared.m_itemType == ItemDrop.ItemData.ItemType.Consumable)
                     {
                         consumables.Add(item);
+                    }
+                    if (item.m_stack < item.m_shared.m_maxStackSize)
+                    {
+                        if (seenItemNames.Contains(item.m_shared.m_name))
+                        {
+
+                            combinable.Add(item.m_shared.m_name);
+                        } else seenItemNames.Add(item.m_shared.m_name);
                     }
                 }
                 else
@@ -202,9 +132,36 @@ namespace JotunnModStub
                 }
             }
 
+            bool doRefresh = false;
+            if (combinable.Count > 0)
+            {
+                foreach (String itemName in combinable)
+                {
+                    List<ItemDrop.ItemData> toCombine = __instance.GetInventory().GetAllItems().FindAll(it => it.m_shared.m_name.Equals(itemName));
+                    ItemDrop.ItemData first = toCombine[0];
+                    int stackSize = first.m_stack;
+                    for (int i = 1; i < toCombine.Count; i++)
+                    {
+                        if (stackSize < first.m_shared.m_maxStackSize)
+                        {
+                            __instance.DropItem(__instance.GetInventory(), toCombine[i], toCombine[i].m_stack, new Vector2i(first.m_gridPos.x, first.m_gridPos.y));
+                            doRefresh = true;
+                            stackSize = stackSize + toCombine[i].m_stack;
+                        }
+                        else break;
+                    }
+                }
+            }
+            if (doRefresh)
+            {
+                organizeInventory(__instance);
+            }
+
+
+            List<ItemDrop.ItemData> sortedEquipment = sortEquipment(equipment);
             int equip_x_index = 0;
             int equip_y_index = 1;
-            foreach (ItemDrop.ItemData item in equipment)
+            foreach (ItemDrop.ItemData item in sortedEquipment)
             {
                 if (equip_x_index > 7)
                 {
@@ -216,9 +173,10 @@ namespace JotunnModStub
                 equip_x_index = equip_x_index + 1;
             }
 
+            List<ItemDrop.ItemData> sortedConsumables = sortConsumables(consumables);
             int c_x_index = 0;
             int c_y_index = 2;
-            foreach (ItemDrop.ItemData item in consumables)
+            foreach (ItemDrop.ItemData item in sortedConsumables)
             {
                 if (c_x_index > 7)
                 {
@@ -241,6 +199,47 @@ namespace JotunnModStub
                 Jotunn.Logger.LogInfo("Moving " + item.m_shared.m_name + " from " + item.m_gridPos.x + item.m_gridPos.y + " to " + emptySlot.x + emptySlot.y);
                 __instance.DropItem(__instance.GetInventory(), item, item.m_stack, new Vector2i(emptySlot.x, emptySlot.y));
             }
+        }
+
+
+        private static List<ItemDrop.ItemData> sortEquipment(List<ItemDrop.ItemData> items)
+        {
+            List<ItemDrop.ItemData> sorted = new List<ItemDrop.ItemData>();
+            // Helmet, chest, legs, cape, belt, arrows, everything else
+
+            List<ItemDrop.ItemData> helms = items.FindAll(it => it.m_shared.m_name.Contains("helm"));
+            List<ItemDrop.ItemData> chests = items.FindAll(it => it.m_shared.m_name.Contains("chest"));
+            List<ItemDrop.ItemData> legs = items.FindAll(it => it.m_shared.m_name.Contains("legs"));
+            List<ItemDrop.ItemData> capes = items.FindAll(it => it.m_shared.m_name.Contains("cape"));
+            List<ItemDrop.ItemData> belts = items.FindAll(it => it.m_shared.m_name.Contains("belt"));
+            List<ItemDrop.ItemData> rest = items.FindAll(it =>
+                !it.m_shared.m_name.Contains("helm") &&
+                 !it.m_shared.m_name.Contains("chest") &&
+                 !it.m_shared.m_name.Contains("legs") &&
+                 !it.m_shared.m_name.Contains("cape") &&
+                 !it.m_shared.m_name.Contains("belt")
+            );
+
+            sorted.AddRange(helms);
+            sorted.AddRange(chests);
+            sorted.AddRange(legs);
+            sorted.AddRange(capes);
+            sorted.AddRange(belts);
+            sorted.AddRange(rest);
+            return sorted;
+        }
+        private static List<ItemDrop.ItemData> sortConsumables(List<ItemDrop.ItemData> items)
+        {
+            List<ItemDrop.ItemData> sorted = new List<ItemDrop.ItemData>();
+            List<ItemDrop.ItemData> meads = items.FindAll(it => it.m_shared.m_name.Contains("mead"));
+            List<ItemDrop.ItemData> health = items.FindAll(it => !it.m_shared.m_name.Contains("mead") && it.m_shared.m_food > it.m_shared.m_foodStamina);
+            List<ItemDrop.ItemData> stam = items.FindAll(it => !it.m_shared.m_name.Contains("mead") && it.m_shared.m_food < it.m_shared.m_foodStamina);
+            List<ItemDrop.ItemData> balanced = items.FindAll(it => !it.m_shared.m_name.Contains("mead") && it.m_shared.m_food == it.m_shared.m_foodStamina);
+            sorted.AddRange(health);
+            sorted.AddRange(balanced);
+            sorted.AddRange(stam);
+            sorted.AddRange(meads);
+            return sorted;
         }
     }
 }
