@@ -81,6 +81,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MyHumanoid.cs" />
+    <Compile Include="MyWearNTear.cs" />
+    <Compile Include="MyPlayer.cs" />
     <Compile Include="MyInventoryGui.cs" />
     <Compile Include="MyInventoryGrid.cs" />
     <Compile Include="Properties\IgnoreAccessModifiers.cs" />

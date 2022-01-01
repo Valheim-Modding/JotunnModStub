@@ -24,7 +24,7 @@ namespace JotunnModStub
         [HarmonyPatch(typeof(InventoryGui), "Awake")]
         private static void PatchInventory(ref InventoryGui __instance)
         {
-            Jotunn.Logger.LogInfo("InventoryGui Awake");
+            //Jotunn.Logger.LogInfo("InventoryGui Awake");
         }
 
         [HarmonyPostfix]
@@ -53,7 +53,7 @@ namespace JotunnModStub
                 SklentMod.SklentMod.Destroy(SklentMod.SklentMod.inventoryPanel);
                 SklentMod.SklentMod.inventoryPanel = null;
             }
-            Jotunn.Logger.LogInfo("InventoryGui Hide");
+            //Jotunn.Logger.LogInfo("InventoryGui Hide");
         }
 
 

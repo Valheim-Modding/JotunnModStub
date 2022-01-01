@@ -24,6 +24,8 @@ namespace SklentMod
         internal Harmony harmony;
         internal Assembly assembly;
         public static GameObject inventoryPanel;
+        public static bool buildingHighlightAlwaysOn = false;
+        public static List<WearNTear> highlighted = new List<WearNTear>();
 
         public void Main()
         {
