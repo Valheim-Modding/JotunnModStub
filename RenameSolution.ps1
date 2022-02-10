@@ -2,31 +2,21 @@ param([string]$cmdarg = "")
 
 #Contibuted by Kpro#3271
 #uncomment to enable logging
-Start-Transcript -OutputDirectory "C:\transcripts\"
+#Start-Transcript -OutputDirectory "C:\transcripts\"
 
 Write-Host ""
 Write-Host ""
-Write-Host "WELCOME TO JOTSUNNMODSUB RENAMING UTILITY"
+Write-Host "WELCOME TO JOTUNNMODSTUB RENAMING UTILITY"
 Write-Host "-----------------------------------------"
 Write-Host ""
 Write-Host "This script will do the following:"
 Write-Host ""
 Write-Host ""
-Write-Host "1. Change the file names, folder names, and project references from the JotuunModStub to your custom solution name."
+Write-Host "1. Change the file names, folder names, and project references from the JotunnModStub to your custom solution name."
 Write-Host ""
-Write-Host "2. Change the DoPreBuild.props file."
+Write-Host "2. Change the DoPrebuild.props file."
 Write-Host ""
 Write-Host "3. Create the Environment.props file."
-Write-Host ""
-Write-Host ""
-Write-Host "Usage"
-Write-Host "-----"
-Write-Host ""
-Write-Host "Place this script in the in your solution folder."
-Write-Host "Right click on script, select 'Run with Powershell' from the context menu"
-Write-Host ""
-Write-Host ""
-Write-Host "                               *                    *"
 
 
 $modstubpath = Get-Location
@@ -51,7 +41,7 @@ if ($cmdarg -eq "-nocopy") {
 	else
 	{
 		Write-Host ""
-		Write-Host "Got it. A copy of this folder will be created with a  new folder and solution name that you choose"
+		Write-Host "Got it. A copy of this folder will be created with a new folder and solution name that you choose"
 		$Name = Read-Host "Enter a new name for the solution."
 		Write-Host ""
 
@@ -59,8 +49,6 @@ if ($cmdarg -eq "-nocopy") {
 		Copy-Item ..\$modstubfoldername -Destination "..\$Name" -Recurse 
 		Set-Location ..\$Name
 		Write-Host "Current location set to: (Get-Location)"
-
-
 	}
 }
 
