@@ -4,7 +4,6 @@
   "version_number": "0.0.1",
   "website_url": "",
   "dependencies": [
-    "denikson-BepInExPack_Valheim-5.4.1502",
-    ""
+    "ValheimModding-Jotunn-2.5.1",
   ]
 }
