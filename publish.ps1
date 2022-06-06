@@ -43,25 +43,15 @@ if (Test-Path -Path "$pdb") {
 Write-Host "Publishing for $Target from $TargetPath"
 
 if ($Target.Equals("Debug")) {
-    $mono = "$ValheimPath\MonoBleedingEdge\EmbedRuntime";
-    Write-Host "Copy mono-2.0-bdwgc.dll to $mono"
-    if (!(Test-Path -Path "$mono\mono-2.0-bdwgc.dll.orig")) {
-        Copy-Item -Path "$mono\mono-2.0-bdwgc.dll" -Destination "$mono\mono-2.0-bdwgc.dll.orig" -Force
-    }
-    Copy-Item -Path "$(Get-Location)\libraries\Debug\mono-2.0-bdwgc.dll" -Destination "$mono" -Force
-    
     if ($DeployPath.Equals("")){
       $DeployPath = "$ValheimPath\BepInEx\plugins"
     }
+    
     $plug = New-Item -Type Directory -Path "$DeployPath\$name" -Force
     Write-Host "Copy $TargetAssembly to $plug"
     Copy-Item -Path "$TargetPath\$name.dll" -Destination "$plug" -Force
     Copy-Item -Path "$TargetPath\$name.pdb" -Destination "$plug" -Force
     Copy-Item -Path "$TargetPath\$name.dll.mdb" -Destination "$plug" -Force
-    
-    # set dnspy debugger env
-    #$dnspy = '--debugger-agent=transport=dt_socket,server=y,address=127.0.0.1:56000,suspend=y,no-hide-debugger'
-    #[Environment]::SetEnvironmentVariable('DNSPY_UNITY_DBG2','','User')
 }
 
 if($Target.Equals("Release")) {
