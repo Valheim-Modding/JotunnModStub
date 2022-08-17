@@ -21,7 +21,7 @@ namespace kingskills.Commands
             }
             //increment test skill
             Jotunn.Logger.LogMessage("Bear skill incrementing!");
-            Player.m_localPlayer.RaiseSkill("Bear", 1);
+            Player.m_localPlayer.RaiseSkill(KingSkills.TestSkillType, 1);
 
             List<Skills.Skill> skillList = Player.m_localPlayer.GetSkills().GetSkillList();
 
