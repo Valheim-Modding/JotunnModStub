@@ -44,7 +44,7 @@ namespace kingskills
             skill.Description = "Become good at bearing";
             skill.IncreaseStep = 1f;
 
-            Skills.SkillType TestSkillType = SkillManager.Instance.AddSkill(skill);
+            TestSkillType = SkillManager.Instance.AddSkill(skill);
 
             Jotunn.Logger.LogMessage(TestSkillType);
         }
