@@ -5,6 +5,7 @@
 // Project: kingskills
 
 using BepInEx;
+using HarmonyLib;
 using Jotunn.Entities;
 using Jotunn.Managers;
 using kingskills.Commands;
@@ -21,6 +22,8 @@ namespace kingskills
         public const string PluginVersion = "0.0.1";
 
         public static Skills.SkillType TestSkillType = 0;
+
+        Harmony harmony = new Harmony(PluginGUID);
         
         // Use this class to add your own localization to the game
         // https://valheim-modding.github.io/Jotunn/tutorials/localization.html
@@ -32,7 +35,8 @@ namespace kingskills
             Jotunn.Logger.LogInfo("kingskills has landed");
             CommandManager.Instance.AddConsoleCommand(new BearSkillCommand());
             AddSkills();
-            
+            harmony.PatchAll();
+
             // To learn more about Jotunn's features, go to
             // https://valheim-modding.github.io/Jotunn/tutorials/overview.html
         }
@@ -48,6 +52,21 @@ namespace kingskills
             TestSkillType = SkillManager.Instance.AddSkill(skill);
 
             Jotunn.Logger.LogMessage(TestSkillType);
+        }
+    }
+
+    [HarmonyPatch(typeof (Character), nameof(Character.Damage))]
+    class DamageExp
+    {
+        static void Prefix(Character __instance, HitData hit)
+        {
+            Jotunn.Logger.LogMessage("Character damage detected");
+
+            if (hit.m_attacker == Player.m_localPlayer.GetZDOID())
+            {
+                Jotunn.Logger.LogMessage("Bear skill incrementing!");
+                Player.m_localPlayer.RaiseSkill(KingSkills.TestSkillType, 10);
+            }
         }
     }
 }
