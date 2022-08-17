@@ -7,6 +7,7 @@
 using BepInEx;
 using Jotunn.Entities;
 using Jotunn.Managers;
+using kingskills.Commands;
 
 namespace kingskills
 {
@@ -18,6 +19,8 @@ namespace kingskills
         public const string PluginGUID = "bearking.kingskills";
         public const string PluginName = "King's Skills";
         public const string PluginVersion = "0.0.1";
+
+        public static Skills.SkillType TestSkillType = 0;
         
         // Use this class to add your own localization to the game
         // https://valheim-modding.github.io/Jotunn/tutorials/localization.html
@@ -27,9 +30,23 @@ namespace kingskills
         {
             // Jotunn comes with its own Logger class to provide a consistent Log style for all mods using it
             Jotunn.Logger.LogInfo("kingskills has landed");
+            CommandManager.Instance.AddConsoleCommand(new BearSkillCommand());
             
             // To learn more about Jotunn's features, go to
             // https://valheim-modding.github.io/Jotunn/tutorials/overview.html
+        }
+
+        private void AddSkills()
+        {
+            Jotunn.Configs.SkillConfig skill = new Jotunn.Configs.SkillConfig();
+            skill.Identifier = "bearking.kingskills.bearskill";
+            skill.Name = "Bear";
+            skill.Description = "Become good at bearing";
+            skill.IncreaseStep = 1f;
+
+            Skills.SkillType TestSkillType = SkillManager.Instance.AddSkill(skill);
+
+            Jotunn.Logger.LogMessage(TestSkillType);
         }
     }
 }
