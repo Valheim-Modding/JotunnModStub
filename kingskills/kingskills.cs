@@ -33,12 +33,18 @@ namespace kingskills
         {
             // Jotunn comes with its own Logger class to provide a consistent Log style for all mods using it
             Jotunn.Logger.LogInfo("kingskills has landed");
+            InitConfig();
             CommandManager.Instance.AddConsoleCommand(new BearSkillCommand());
             AddSkills();
             harmony.PatchAll();
 
             // To learn more about Jotunn's features, go to
             // https://valheim-modding.github.io/Jotunn/tutorials/overview.html
+        }
+
+        private void InitConfig()
+        {
+            WeaponExperience.Config.Init(Config);
         }
 
         private void AddSkills()
@@ -52,21 +58,6 @@ namespace kingskills
             TestSkillType = SkillManager.Instance.AddSkill(skill);
 
             Jotunn.Logger.LogMessage(TestSkillType);
-        }
-    }
-
-    [HarmonyPatch(typeof (Character), nameof(Character.Damage))]
-    class DamageExp
-    {
-        static void Prefix(Character __instance, HitData hit)
-        {
-            Jotunn.Logger.LogMessage("Character damage detected");
-
-            if (hit.m_attacker == Player.m_localPlayer.GetZDOID())
-            {
-                Jotunn.Logger.LogMessage("Bear skill incrementing!");
-                Player.m_localPlayer.RaiseSkill(KingSkills.TestSkillType, 10);
-            }
         }
     }
 }
