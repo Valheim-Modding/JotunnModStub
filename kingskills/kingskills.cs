@@ -31,6 +31,7 @@ namespace kingskills
             // Jotunn comes with its own Logger class to provide a consistent Log style for all mods using it
             Jotunn.Logger.LogInfo("kingskills has landed");
             CommandManager.Instance.AddConsoleCommand(new BearSkillCommand());
+            AddSkills();
             
             // To learn more about Jotunn's features, go to
             // https://valheim-modding.github.io/Jotunn/tutorials/overview.html

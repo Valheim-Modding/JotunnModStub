@@ -21,16 +21,16 @@ namespace kingskills.Commands
             }
             //increment test skill
             Jotunn.Logger.LogMessage("Bear skill incrementing!");
-            Player.m_localPlayer.RaiseSkill(KingSkills.TestSkillType, 1);
+            Player.m_localPlayer.RaiseSkill(KingSkills.TestSkillType, 10);
+            Player.m_localPlayer.RaiseSkill(Skills.SkillType.Clubs, 10);
 
             List<Skills.Skill> skillList = Player.m_localPlayer.GetSkills().GetSkillList();
 
             foreach (Skills.Skill skill in skillList)
             {
-                if (skill != null){
-                    Jotunn.Logger.LogMessage(skill.m_info);
-                }
+                Jotunn.Logger.LogMessage(skill.m_info.m_skill + " level is " + skill.m_level);
             }
+            
         }
     }
 }
