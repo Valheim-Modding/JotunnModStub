@@ -6,12 +6,10 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace kingskills
 {
-    class BlockChanges
-    {
-    }
     /*
     [HarmonyPatch(typeof(HitData), nameof(HitData.BlockDamage))]
     class BlockExp
@@ -22,38 +20,30 @@ namespace kingskills
             Jotunn.Logger.LogMessage("Increased block skill by " + damage + " thanks to blocked damage");
         }
     }
-
-    [HarmonyPatch(typeof(ItemDrop.ItemData), nameof(ItemDrop.ItemData.GetBlockPower))]
-    class BlockPatch
-    {
-        public static bool Prefix(ItemDrop.ItemData __instance, float skillFactor)=
-        {
-            bool dontSkip = true;
-            float baseBlockPower = __instance.GetBaseBlockPower(__instance.m_quality);
-            Character player = Player.m_localPlayer;
-            if (player)
-            {
-                skillFactor = player.GetSkillFactor(Skills.SkillType.Blocking) * 100;
-                Jotunn.Logger.LogMessage("Your block level is " + skillFactor);
-            }
-            else
-            {
-                skillFactor = 0;
-                Jotunn.Logger.LogMessage("No player found in this block event");
-            }
-
-            return dontSkip;
-        }
-    }*/
+    */
 
     [HarmonyPatch(typeof(Humanoid), "BlockAttack")]
     class BlockPatch : Humanoid
     {
+        public const float FlatBlockPowerMax = 50f;
+        public const float FlatBlockPowerMin = 0f;
+        public const float PerBlockPowerMax = 1f;
+        public const float PerBlockPowerMin = -.25f;
+        public const float BlockStaminaReduxMax = .5f;
+        public const float BlockStaminaReduxMin = -.1f;
+        public const float AbsoluteStaggerLimitIncreaseMax = .3f;
+        public const float AbsoluteStaggerLimitIncreaseMin = 0f;
+        public const float AdditionalParryBonus = 1f;
+        public const float BlockExpMod = .22f;
+        public const float ParryExpMod = 2f;
+
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             bool sawBlockPower = false;
             bool patchedBlockPower = false;
             CodeInstruction storeBlockPower = new CodeInstruction(OpCodes.Nop);
+            CodeInstruction loadParryFlag = new CodeInstruction(OpCodes.Nop);
+
             foreach (var instruction in instructions)
             {
                 if (!patchedBlockPower)
@@ -66,12 +56,15 @@ namespace kingskills
                     {
                         storeBlockPower = instruction.Clone();
                     }
-                    else if (sawBlockPower && instruction.IsLdloc())
+                    else if (sawBlockPower && instruction.IsLdloc()) // load parry flag
                     {
+                        loadParryFlag = instruction.Clone();
                         yield return instruction.Clone(); // parry flag
-                        yield return new CodeInstruction(OpCodes.Ldarg_0);
+                        yield return new CodeInstruction(OpCodes.Ldarg_0); // Humanoid this (blocker)
+                        yield return new CodeInstruction(OpCodes.Ldarg_1); // HitData hit
+                        yield return new CodeInstruction(OpCodes.Ldarg_2); // Character attacker
                         yield return new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(BlockPatch), "FixBlockPower"));
-                        yield return storeBlockPower;
+                        yield return storeBlockPower; // store result (block power)
                         yield return instruction;
                         storeBlockPower = null;
                         sawBlockPower = false;
@@ -81,6 +74,19 @@ namespace kingskills
                     {
                         yield return instruction;
                     }
+                }
+                else if (instruction.Calls(AccessTools.DeclaredMethod(typeof(Character), nameof(Character.UseStamina))))
+                {
+                    instruction.operand = AccessTools.DeclaredMethod(typeof(BlockPatch), nameof(BlockPatch.UseBlockStamina));
+                    yield return instruction;
+                }
+                else if (instruction.Calls(AccessTools.DeclaredMethod(typeof(HitData), nameof(HitData.BlockDamage))))
+                {
+                    yield return new CodeInstruction(OpCodes.Ldarg_0);
+                    yield return loadParryFlag;
+                    loadParryFlag = null;
+                    instruction.operand = AccessTools.DeclaredMethod(typeof(BlockPatch), nameof(BlockPatch.BlockDamageExpPatch));
+                    yield return instruction;
                 }
                 else if (instruction.Calls(AccessTools.DeclaredMethod(typeof(Character), "RaiseSkill")))
                 {
@@ -97,11 +103,48 @@ namespace kingskills
             }
         }
 
-        private static float FixBlockPower(ItemDrop.ItemData currentBlocker, float skillFactor, bool isParry, Humanoid instance)
+        private static void UseBlockStamina(Humanoid __instance, float stamina)
+        {
+            float skillFactor = __instance.GetSkillFactor(Skills.SkillType.Blocking);
+            //Jotunn.Logger.LogMessage($"Stamina before redux is {stamina}");
+            stamina *= 1f - Mathf.Lerp(BlockStaminaReduxMin, BlockStaminaReduxMax, skillFactor);
+            //Jotunn.Logger.LogMessage($"Stamina after redux is {stamina}");
+            __instance.UseStamina(stamina);
+        }
+
+        private static void BlockDamageExpPatch(HitData hit, float damage, Humanoid __instance, bool isParry)
+        {
+            hit.BlockDamage(damage);
+            float expValue = damage * BlockExpMod;
+            if (isParry)
+            {
+                expValue *= ParryExpMod;
+                //Jotunn.Logger.LogMessage($"Parried! Exp Value doubled!");
+            }
+            __instance.RaiseSkill(Skills.SkillType.Blocking, expValue);
+            //Jotunn.Logger.LogMessage($"Increased blocking skill by {expValue} due to damage");
+        }
+
+        private static float FixBlockPower(
+            ItemDrop.ItemData currentBlocker,
+            float skillFactor,
+            bool isParry,
+            Humanoid instance,
+            HitData hit,
+            Character attacker
+            )
         {
             //Jotunn.Logger.LogMessage($"block power of {currentBlocker.GetBlockPower(skillFactor)} is now mine, also am I parrying? {isParry}");
+            float blockPower = 0f;
+            float itemBlockPower = currentBlocker.GetBaseBlockPower();
+            float baseBlockPower = itemBlockPower + FlatBlockPowerMin + (skillFactor * (FlatBlockPowerMax - FlatBlockPowerMin));
+            blockPower = baseBlockPower + (baseBlockPower * PerBlockPowerMin) + baseBlockPower * (PerBlockPowerMax - PerBlockPowerMin);
 
-            return 0f;
+            if (isParry)
+            {
+                blockPower *= AdditionalParryBonus;
+            }
+            return blockPower;
         }
     }
 }
