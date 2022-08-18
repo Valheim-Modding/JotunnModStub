@@ -15,6 +15,7 @@ namespace kingskills.WeaponExperience
     {
         public static ConfigEntry<float> XpStrikeCharFactor;
         public static ConfigEntry<float> XpStrikeDestructableFactor;
+        public static ConfigEntry<float> XpStrikeResourceFactor;
 
         public static ConfigEntry<float> XpHoldFactor;
         public static ConfigEntry<float> XpHoldTimer;
@@ -48,6 +49,7 @@ namespace kingskills.WeaponExperience
 
             XpStrikeCharFactor = cfg.Bind("Experience.Weapons", "StrikeCharacterFactor", 1.0f, "Multiplier to modify experience gain from striking characters");
             XpStrikeDestructableFactor = cfg.Bind("Experience.Weapons", "StrikeDestructibleFactor", 0.4f, "Multiplier to modify experience gain from striking destructibles");
+            XpStrikeResourceFactor = cfg.Bind("Experience.Weapons", "StrikeResourceFactor", 1.5f, "Multiplier to gathering skills (Woodcutting, Mining, etc...) from striking the appropriate resource");
 
             XpHoldRate = XpHoldFactor.Value * XpPerSec;
             XpSwingRate = (XpSwingFactor.Value / XpSwingsPerSecondInCombat.Value) * XpPerSec;
@@ -71,9 +73,8 @@ namespace kingskills.WeaponExperience
             }
         }
 
-        public static void Swing(Player p)
+        public static void Swing(Player p, Skills.SkillType skill)
         {
-            Skills.SkillType skill = p.GetCurrentWeapon().m_shared.m_skillType;
             //Jotunn.Logger.LogMessage($"Player swinging with {skill} for {Config.XpSwingRate} XP");
             p.RaiseSkill(skill, Config.XpSwingRate);
         }
@@ -93,7 +94,41 @@ namespace kingskills.WeaponExperience
         [HarmonyPatch(typeof(Destructible), nameof(Destructible.Damage))]
         static void Destructible_Damage(Destructible __instance, HitData hit)
         {
-            Manager.Strike(Player.m_localPlayer, __instance, hit, Config.XpStrikeDestructableFactor.Value);
+            Manager.Strike(Player.m_localPlayer, __instance, hit,
+                hit.m_skill == Skills.SkillType.WoodCutting || hit.m_skill == Skills.SkillType.Pickaxes
+                ? Config.XpStrikeResourceFactor.Value : Config.XpStrikeDestructableFactor.Value);
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(MineRock), nameof(MineRock.Damage))]
+        static void MineRock_Damage(Destructible __instance, HitData hit)
+        {
+            Manager.Strike(Player.m_localPlayer, __instance, hit,
+                hit.m_skill == Skills.SkillType.Pickaxes ? Config.XpStrikeResourceFactor.Value : Config.XpStrikeDestructableFactor.Value);
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(MineRock5), nameof(MineRock5.Damage))]
+        static void MineRock5_Damage(Destructible __instance, HitData hit)
+        {
+            Manager.Strike(Player.m_localPlayer, __instance, hit,
+                hit.m_skill == Skills.SkillType.Pickaxes ? Config.XpStrikeResourceFactor.Value : Config.XpStrikeDestructableFactor.Value);
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(TreeBase), nameof(TreeBase.Damage))]
+        static void TreeBase_Damage(Destructible __instance, HitData hit)
+        {
+            Manager.Strike(Player.m_localPlayer, __instance, hit,
+                hit.m_skill == Skills.SkillType.WoodCutting ? Config.XpStrikeResourceFactor.Value : Config.XpStrikeDestructableFactor.Value);
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(TreeLog), nameof(TreeLog.Damage))]
+        static void TreeLog_Damage(Destructible __instance, HitData hit)
+        {
+            Manager.Strike(Player.m_localPlayer, __instance, hit,
+                hit.m_skill == Skills.SkillType.WoodCutting ? Config.XpStrikeResourceFactor.Value : Config.XpStrikeDestructableFactor.Value);
         }
 
         [HarmonyPostfix]
@@ -101,7 +136,17 @@ namespace kingskills.WeaponExperience
         static void Humanoid_StartAttack(Humanoid __instance, Character target, bool secondaryAttack, bool __result)
         {
             if (__result && __instance is Player && __instance == Player.m_localPlayer) {
-                Manager.Swing(__instance as Player);
+                Manager.Swing(__instance as Player, __instance.GetCurrentWeapon().m_shared.m_skillType);
+            }
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(Attack), nameof(Attack.SpawnOnHitTerrain))]
+        static void Attack_SpawnOnHitTerrain(Attack __instance, Vector3 hitPoint, GameObject prefab)
+        {
+            if (__instance.m_pickaxeSpecial && __instance.m_character is Player)
+            {
+                Manager.Swing(__instance.m_character as Player, Skills.SkillType.Pickaxes);
             }
         }
     }
