@@ -31,15 +31,12 @@ namespace kingskills
 
         private void Awake()
         {
-            // Jotunn comes with its own Logger class to provide a consistent Log style for all mods using it
-            Jotunn.Logger.LogInfo("kingskills has landed");
+            Jotunn.Logger.LogInfo("King's skills has awakened!");
             InitConfig();
             CommandManager.Instance.AddConsoleCommand(new BearSkillCommand());
+            CommandManager.Instance.AddConsoleCommand(new SwimSkillUpdateCommand());
             AddSkills();
             harmony.PatchAll();
-
-            // To learn more about Jotunn's features, go to
-            // https://valheim-modding.github.io/Jotunn/tutorials/overview.html
         }
 
         private void InitConfig()

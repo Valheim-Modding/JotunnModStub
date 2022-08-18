@@ -22,15 +22,23 @@ namespace kingskills.Commands
             //increment test skill
             Jotunn.Logger.LogMessage("Bear skill incrementing!");
             Player.m_localPlayer.RaiseSkill(KingSkills.TestSkillType, 10);
-            Player.m_localPlayer.RaiseSkill(Skills.SkillType.Clubs, 10);
+        }
+    }
 
-            List<Skills.Skill> skillList = Player.m_localPlayer.GetSkills().GetSkillList();
+    public class SwimSkillUpdateCommand : ConsoleCommand
+    {
+        public override string Name => "updateswim";
 
-            foreach (Skills.Skill skill in skillList)
+        public override string Help => "Runs the update swim function for king's skills mod";
+
+        public override void Run(string[] args)
+        {
+            if (args.Length != 0)
             {
-                Jotunn.Logger.LogMessage(skill.m_info.m_skill + " level is " + skill.m_level);
+                return;
             }
-            
+
+            MovePatch.SwimSpeedUpdate(Player.m_localPlayer);
         }
     }
 }
