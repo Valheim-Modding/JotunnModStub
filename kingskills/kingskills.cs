@@ -34,7 +34,7 @@ namespace kingskills
             Jotunn.Logger.LogInfo("King's skills has awakened!");
             InitConfig();
             CommandManager.Instance.AddConsoleCommand(new BearSkillCommand());
-            CommandManager.Instance.AddConsoleCommand(new SwimSkillUpdateCommand());
+            CommandManager.Instance.AddConsoleCommand(new SkillUpdateCommand());
             AddSkills();
             harmony.PatchAll();
         }

@@ -25,11 +25,11 @@ namespace kingskills.Commands
         }
     }
 
-    public class SwimSkillUpdateCommand : ConsoleCommand
+    public class SkillUpdateCommand : ConsoleCommand
     {
-        public override string Name => "updateswim";
+        public override string Name => "updateks";
 
-        public override string Help => "Runs the update swim function for king's skills mod";
+        public override string Help => "Runs the update functions for king's skills";
 
         public override void Run(string[] args)
         {
