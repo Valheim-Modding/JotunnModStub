@@ -329,11 +329,11 @@ namespace kingskills
             player.m_jumpForceTiredFactor = newTiredFactor;
 
             //Jotunn.Logger.LogMessage($"Jump forward force is currently {player.m_jumpForceForward}");
-            Jotunn.Logger.LogMessage(
+            /*Jotunn.Logger.LogMessage(
                 $"New jump force: {player.m_jumpForceForward} \n" +
                 $"New stamina use: {player.m_jumpStaminaUsage} \n" +
                 $"New forward force: {player.m_jumpForceForward} \n" +
-                $"New tired factor: {player.m_jumpForceTiredFactor}");
+                $"New tired factor: {player.m_jumpForceTiredFactor}");*/
         }
 
         //Written by fritz to create a quick and dirty sin curve.
