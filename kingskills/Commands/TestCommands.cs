@@ -39,6 +39,7 @@ namespace kingskills.Commands
             }
 
             MovePatch.SwimSpeedUpdate(Player.m_localPlayer);
+            MovePatch.RunSpeedUpdate(Player.m_localPlayer);
         }
     }
 }

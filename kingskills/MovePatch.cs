@@ -60,13 +60,13 @@ namespace kingskills
         const float RunSpeedExpMod = 1f;
 
         //These are percents, max and min referencing effects at level 100 and 0
-        const float RunSpeedMax = 4f;
+        const float RunSpeedMax = 2.5f;
         const float RunSpeedMin = 0f;
         //How much of a reduction to the movespeed minus you get from your equipment
-        const float RunEquipmentReduxMax = .2f;
+        const float RunEquipmentReduxMax = .5f;
         const float RunEquipmentReduxMin = 0f;
         //How much our encumberance system can decrease your movespeed in percent
-        const float RunEncumberanceMax = .3f;
+        const float RunEncumberanceMax = .5f;
         const float RunEncumberanceMin = 0f;
         //How much run speed reduces the effects of encumberance
         const float RunEncumberanceReduxMax = .5f;
@@ -77,10 +77,10 @@ namespace kingskills
 
         const float BaseRunStaminaDrain = 10f;
         const float RunStaminaReduxMax = .8f;
-        const float RunStaminaReduxMin = -.2f;
+        const float RunStaminaReduxMin = -.25f;
 
         //How much stamina run grants per level
-        const float RunStaminaPerLevel = .8f;
+        const float RunStaminaPerLevel = .6f;
 
         [HarmonyPatch(nameof(Player.OnSkillLevelup))]
         [HarmonyPostfix]
@@ -184,6 +184,8 @@ namespace kingskills
                 $"encumberance factor was {encumberanceFactor},\n" +
                 $"total run speed was was {runSpeed},\n");*/
 
+
+
             //Returning false skips the original implementation of GetRunSpeedFactor
             return false;
         }
@@ -242,20 +244,34 @@ namespace kingskills
         {
             float skillFactor = player.GetSkillFactor(Skills.SkillType.Run);
             float newRunStaminaDrain = BaseRunStaminaDrain;
+
             //We want to undo the game's skillfactor Lerp first before we do our own
+            //Jotunn.Logger.LogMessage($"According to vanilla, the stamina drain ought to be {newRunStaminaDrain}.");
             newRunStaminaDrain /= Mathf.Lerp(1f, .5f, skillFactor);
+
+            //Jotunn.Logger.LogMessage($"Reversing the effect of the skill, it's now {newRunStaminaDrain}.");
             newRunStaminaDrain *= (1f - Mathf.Lerp(RunStaminaReduxMin, RunStaminaReduxMax, skillFactor));
             player.m_runStaminaDrain = newRunStaminaDrain;
+
+            //Jotunn.Logger.LogMessage($"Adding in our own skill effects, it's now {newRunStaminaDrain}.");
+            //This number will not sound right - that's because the game will run it's own Lerp on it later.
 
             float newRunLevel = skillFactor * 100;
             float totalRunStaminaBonus = newRunLevel * RunStaminaPerLevel;
 
             //First, we remove the last recorded update to the player's base stamina
+            //Jotunn.Logger.LogMessage($"The player's base stamina is {player.m_baseStamina}, and last time we added to it we added {LastStaminaAdded}.");
             player.m_baseStamina -= LastStaminaAdded;
+
+            //Jotunn.Logger.LogMessage($"Now it is {player.m_baseStamina}.");
             //Then, we add the new value
             player.m_baseStamina += totalRunStaminaBonus;
+
+            //Jotunn.Logger.LogMessage($"We just added {totalRunStaminaBonus} to it, making it {player.m_baseStamina}.");
             //Then, we record it for next time this function is run
             LastStaminaAdded = totalRunStaminaBonus;
+
+            //Jotunn.Logger.LogMessage($"Now we reset the last stamina added to {LastStaminaAdded}.");
         }
 
         public static void SwimSpeedUpdate(Player player)
