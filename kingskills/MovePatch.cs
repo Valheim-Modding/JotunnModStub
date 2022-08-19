@@ -82,6 +82,27 @@ namespace kingskills
         //How much stamina run grants per level
         const float RunStaminaPerLevel = .6f;
 
+        //Increases force you jump with by %
+        const float BaseJumpForce = 8f;
+        const float JumpForceMax = .9f;
+        const float JumpForceMin = -.1f;
+
+        //Reduces stamina cost of jumping by a %
+        const float BaseJumpStaminaUse = 10f;
+        const float JumpStaminaReduxMax = .6f;
+        const float JumpStaminaReduxMin = 0f;
+
+        //Increases forwards force when jumping by %
+        const float BaseJumpForwardForce = 2f;
+        const float JumpForwardForceMax = 1.5f;
+        const float JumpForwardForceMin = 0f;
+        //May not actually be used or be different from jump force
+
+        //This absolute % affects your jump force when tired.
+        //Base is taken from game code, max is our new value at level 100
+        const float BaseJumpTiredFactor = .7f;
+        const float MaxJumpTiredFactor = .9f;
+
         [HarmonyPatch(nameof(Player.OnSkillLevelup))]
         [HarmonyPostfix]
         static void SkillLevelupPatch(Player __instance, Skills.SkillType skill)
@@ -93,6 +114,10 @@ namespace kingskills
             else if (skill == Skills.SkillType.Run)
             {
                 RunSpeedUpdate(__instance);
+            }
+            else if (skill == Skills.SkillType.Jump)
+            {
+                JumpForceUpdate(__instance);
             }
 
         }
@@ -282,6 +307,33 @@ namespace kingskills
             player.m_swimTurnSpeed = BaseSwimTurn * (1f + Mathf.Lerp(SwimTurnMin, SwimTurnMax, skillFactor));
             player.m_swimStaminaDrainMinSkill = SwimStaminaPSMin;
             player.m_swimStaminaDrainMaxSkill = SwimStaminaPSMax;
+        }
+
+        public static void JumpForceUpdate(Player player)
+        {
+            float skillFactor = player.GetSkillFactor(Skills.SkillType.Jump);
+
+            float vanillaJumpAddition = 1f + skillFactor * .4f;
+            float newJumpForce = BaseJumpForce * (1 + Mathf.Lerp(JumpForceMin, JumpForceMax, skillFactor));
+            float newStaminaUse = BaseJumpStaminaUse * (1 - Mathf.Lerp(JumpStaminaReduxMin, JumpStaminaReduxMax, skillFactor));
+            float newJumpForwardForce = BaseJumpForwardForce * (1 + Mathf.Lerp(JumpForwardForceMin, JumpForwardForceMax, skillFactor));
+            float newTiredFactor = Mathf.Lerp(BaseJumpTiredFactor, MaxJumpTiredFactor, skillFactor);
+
+            newJumpForce /= vanillaJumpAddition; //Removing the vanilla calculations
+            newJumpForwardForce /= vanillaJumpAddition; //Removing the vanilla calculations
+
+
+            player.m_jumpForce = newJumpForce;
+            player.m_jumpStaminaUsage = newStaminaUse;
+            player.m_jumpForceForward = newJumpForwardForce;
+            player.m_jumpForceTiredFactor = newTiredFactor;
+
+            //Jotunn.Logger.LogMessage($"Jump forward force is currently {player.m_jumpForceForward}");
+            Jotunn.Logger.LogMessage(
+                $"New jump force: {player.m_jumpForceForward} \n" +
+                $"New stamina use: {player.m_jumpStaminaUsage} \n" +
+                $"New forward force: {player.m_jumpForceForward} \n" +
+                $"New tired factor: {player.m_jumpForceTiredFactor}");
         }
 
         //Written by fritz to create a quick and dirty sin curve.
