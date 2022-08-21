@@ -25,17 +25,28 @@ namespace kingskills
     [HarmonyPatch(typeof(Humanoid), "BlockAttack")]
     class BlockPatch : Humanoid
     {
+        //How much flat block armor do we get per level up to max
         public const float FlatBlockPowerMax = 50f;
         public const float FlatBlockPowerMin = 0f;
+        //What percent block armor do we get per level min to max
         public const float PerBlockPowerMax = 1f;
         public const float PerBlockPowerMin = -.25f;
+        //How much is the stamina cost for blocking reduced from min to max
         public const float BlockStaminaReduxMax = .5f;
         public const float BlockStaminaReduxMin = -.1f;
+        //How much is the player's stagger limit increased from min to max
         public const float AbsoluteStaggerLimitIncreaseMax = .3f;
         public const float AbsoluteStaggerLimitIncreaseMin = 0f;
+        //Used for perks, shouldn't be a float eventually
         public const float AdditionalParryBonus = 1f;
+        //How much experience do we get per damage blocked?
         public const float BlockExpMod = .22f;
+        //What is the bonus experience for parrying?
         public const float ParryExpMod = 2f;
+
+        //How much bonus xp do we get for unarmed when we unarmed block?
+        public const float UnarmedBXPBlock = 20f;
+
 
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
@@ -112,6 +123,7 @@ namespace kingskills
             __instance.UseStamina(stamina);
         }
 
+
         private static void BlockDamageExpPatch(HitData hit, float damage, Humanoid __instance, bool isParry)
         {
             hit.BlockDamage(damage);
@@ -122,6 +134,11 @@ namespace kingskills
                 //Jotunn.Logger.LogMessage($"Parried! Exp Value doubled!");
             }
             __instance.RaiseSkill(Skills.SkillType.Blocking, expValue);
+            if (__instance.GetCurrentBlocker() == __instance.m_unarmedWeapon.m_itemData)
+            {
+                //Bonus exp for unarmed block!
+                __instance.RaiseSkill(Skills.SkillType.Unarmed, UnarmedBXPBlock);
+            }
             //Jotunn.Logger.LogMessage($"Increased blocking skill by {expValue} due to damage");
         }
 
