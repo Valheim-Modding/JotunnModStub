@@ -65,8 +65,9 @@ namespace kingskills.WeaponExperience
             {
                 //Jotunn.Logger.LogMessage($"Player dealt damage to {__instance.GetDestructibleType()}");
                 float damage = hit.m_damage.GetTotalDamage();
-                // TODO: account for attack speed, vulnerabilities?
+
                 float damage_xp = 2 * Config.XpStrikeFactor.Value * Mathf.Pow(damage, Config.XpDamageDegree);
+                
                 float final_xp = damage_xp * factor;
                 //Jotunn.Logger.LogMessage($"Incrementing {hit.m_skill} by {final_xp} = damage {damage} ^ {Config.XpDamageDegree} * factor {factor}");
                 p.RaiseSkill(hit.m_skill, final_xp);

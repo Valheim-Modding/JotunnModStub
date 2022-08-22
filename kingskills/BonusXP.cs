@@ -18,6 +18,8 @@ namespace kingskills
 
         public const float SwordBXPStaggerHit = 20f;
 
+        public const float KnifeBXPBackstab = 20f;
+
         //For transferring stagger experience check
         static Player playerRef = null;
         static bool staggerFlag = false;
@@ -34,6 +36,7 @@ namespace kingskills
             {
                 //Jotunn.Logger.LogMessage($"A player hit someone");
                 playerRef = Player.m_localPlayer;
+
                 if (__instance.IsStaggering())
                 {
                     staggerFlag = false;
@@ -43,10 +46,33 @@ namespace kingskills
                 {
                     staggerFlag = true;
                 }
+
             }
         }
 
-        [HarmonyPatch(nameof(Character.RPC_Stagger))]
+        [HarmonyPatch(nameof(Character.RPC_Damage))]
+        [HarmonyPrefix]
+        private static void OnDamageRPCCall(Character __instance, long sender, HitData hit)
+        {
+            ZDOID player = hit.m_attacker;
+
+            if (Player.m_localPlayer.GetZDOID().Equals(player))
+            {
+                Player attacker = Player.m_localPlayer;
+
+                if (__instance.m_baseAI != null)
+                {
+                    if (!__instance.m_baseAI.IsAlerted() && hit.m_backstabBonus > 1f && Time.time - __instance.m_backstabTime > 300f)
+                    {
+                        //Jotunn.Logger.LogMessage($"I am pretty sure I just got backstabbed");
+                        OnBackstab(attacker);
+                    }
+                }
+            }
+        }
+
+
+            [HarmonyPatch(nameof(Character.RPC_Stagger))]
         [HarmonyPostfix]
         private static void StaggerPostFix(Character __instance)
         {
@@ -64,7 +90,16 @@ namespace kingskills
             if (PatchWeaponHoldXp.GetPlayerWeapon(attacker).m_shared.m_skillType == Skills.SkillType.Swords)
             {
                 attacker.RaiseSkill(Skills.SkillType.Swords, SwordBXPStaggerHit);
-                Jotunn.Logger.LogMessage($"A player just hit us with a sword while we were staggered, so applying bonus exp");
+                //Jotunn.Logger.LogMessage($"A player just hit us with a sword while we were staggered, so applying bonus exp");
+            }
+        }
+
+        private static void OnBackstab(Player attacker)
+        {
+            if (PatchWeaponHoldXp.GetPlayerWeapon(attacker).m_shared.m_skillType == Skills.SkillType.Knives)
+            {
+                attacker.RaiseSkill(Skills.SkillType.Swords, KnifeBXPBackstab);
+                //Jotunn.Logger.LogMessage($"A player just backstabbed us with a knife, so +exp");
             }
         }
     }
