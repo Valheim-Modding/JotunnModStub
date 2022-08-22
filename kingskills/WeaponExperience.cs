@@ -160,7 +160,7 @@ namespace kingskills.WeaponExperience
         // Get the actual weapon a player would swing with, or null if the player couldn't swing in this state.
         // Compared to Player.GetCurrentWeapon(), for example, this returns null if the player is holding
         // a hammer or pickaxe, but will return unarmed even if the player is holding a shield.
-        static ItemDrop.ItemData GetPlayerWeapon(Player p)
+        public static ItemDrop.ItemData GetPlayerWeapon(Player p)
         {
             if (p.m_leftItem != null && p.m_leftItem.IsWeapon() && p.m_leftItem.m_shared.m_skillType != Skills.SkillType.Pickaxes)
             {
