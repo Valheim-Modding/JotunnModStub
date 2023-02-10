@@ -1,10 +1,4 @@
-﻿// JotunnModStub
-// a Valheim mod skeleton using Jötunn
-// 
-// File:    JotunnModStub.cs
-// Project: JotunnModStub
-
-using BepInEx;
+﻿using BepInEx;
 using Jotunn.Entities;
 using Jotunn.Managers;
 using Jotunn.Utils;
