@@ -10,7 +10,7 @@ oldstring="$1"
 newstring="$2"
 
 # Replace string in file and folder names
-find "$directory" -depth -name "*$oldstring*" -execdir bash -c 'mv -- "$1" "${1//'"$oldstring"'/'"$newstring"'}"' _ {} \;
+find "$directory" -depth  -not -path '*/.git/*' -name "*$oldstring*" -execdir bash -c 'mv -- "$1" "${1//'"$oldstring"'/'"$newstring"'}"' _ {} \;
 
 # Replace string in file contents
-find "$directory" -type f -exec sed -i "s/$oldstring/$newstring/g" {} +
+find "$directory" -not -path '*/.git/*' -type f -exec sed -i "s/$oldstring/$newstring/g" {} +
