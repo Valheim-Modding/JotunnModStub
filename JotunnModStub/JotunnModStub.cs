@@ -1,6 +1,7 @@
 ﻿using BepInEx;
 using Jotunn.Entities;
 using Jotunn.Managers;
+using Jotunn.Utils;
 
 namespace JotunnModStub
 {
