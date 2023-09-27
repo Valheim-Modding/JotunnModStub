@@ -3,7 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - snappoint
+  - StationUseArea
+  - roof
+  - spawned
+  - leaky
+  - minerock
+  - antimist
+  - SeekerQueenTeleportTarget
   layers:
   - Default
   - TransparentFX
@@ -25,18 +33,18 @@ TagManager:
   - character_ghost
   - hitbox
   - skybox
+  - Default_small
+  - WaterVolume
+  - weapon
+  - blocker
+  - pathblocker
+  - viewblock
+  - character_net
+  - character_noenv
+  - vehicle
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - smoke
   m_SortingLayers:
   - name: Default
     uniqueID: 0
