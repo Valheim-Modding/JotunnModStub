@@ -1,0 +1,37 @@
+{
+   "RestockLabelCharacter": "R",
+   "QuickStackLabelCharacter": "Q",
+   "SortLabelCharacter": "S",
+ 
+   "QuickStackResultMessageNothing": "빠른 스택에 아무 것도 없음",
+   "QuickStackResultMessageNone": "누적된 항목 0개",
+   "QuickStackResultMessageOne": "누적된 항목 1개",
+   "QuickStackResultMessageMore": "누적된 항목 {0}개",
+ 
+   "RestockResultMessageNothing": "재입고할 항목 없음",
+   "RestockResultMessageNone": "재입고할 수 없음(0/{0})",
+   "RestockResultMessagePartial": "부분적으로 재입고됨({0}/{1})",
+   "RestockResultMessageFull": "완전히 재입고됨(총: {0})",
+ 
+   "QuickStackLabel": "퀵 스택",
+   "StoreAllLabel": "모두 저장",
+   "SortLabel": "정렬",
+   "RestockLabel": "재입고",
+   "TrashLabel": "휴지통",
+ 
+   "SortByInternalNameLabel": "i. 이름",
+   "SortByTranslatedNameLabel": "t. 이름",
+   "SortByValueLabel": "값",
+   "SortByWeightLabel": "무게",
+   "SortByTypeLabel": "유형",
+ 
+   "TrashConfirmationOkayButton": "휴지통",
+   "QuickTrashConfirmation": "빠른 휴지통?",
+   "CantTrashFavoritedItemWarning": "즐겨찾기 항목을 삭제할 수 없습니다!",
+   "CantTrashFlagFavoritedItemWarning": "즐겨찾기 항목을 휴지통으로 플래그 지정할 수 없습니다!",
+   "CantTrashHotkeyBarItemWarning": "단축키 표시줄에서 항목 폐기를 허용하지 않는 설정입니다!",
+   "CantFavoriteTrashFlaggedItemWarning": "휴지통 플래그가 지정된 항목을 즐겨찾기에 추가할 수 없습니다!",
+ 
+   "FavoritedItemTooltip": "빠르게 쌓거나, 정렬하거나,\n모두 저장하거나, 폐기하지 않습니다",
+   "TrashFlaggedItemTooltip": "빠른 폐기 가능"
+}

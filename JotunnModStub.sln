@@ -3,7 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JotunnModStub", "JotunnModStub\JotunnModStub.csproj", "{DEAF4438-8089-40ED-8175-398E1261D45B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleRecipesMod", "ExampleRecipesMod\ExampleRecipesMod.csproj", "{E980898A-7D92-4CDC-AE6F-86D205F1E83B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickStackSortMod", "QuickStackSortMod\QuickStackSortMod.csproj", "{E716AAFB-5023-405C-8F42-59B85BEAEE39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickStackStore", "..\Valheim_QuickStackStore\QuickStackStore\QuickStackStore.csproj", "{275487B1-79B5-42E3-A532-C4A89AFCB2BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_JotunnModStub", "_JotunnModStub\_JotunnModStub.csproj", "{DEAF4438-8089-40ED-8175-398E1261D45B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemDrawersKGMod", "ItemDrawersKGMod\ItemDrawersKGMod.csproj", "{B481C8EA-2F3D-48CA-ADA3-BADBA47482DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemDrawersKG", "..\Valheim_ItemDrawers_KG\ItemDrawersKG.csproj", "{BDB57018-2084-48D9-AD7C-2EE1BAA291EC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Jotunn", "Jotunn", "{F4C28770-B7C5-4B22-8E2C-2CBDA6A7ABB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,13 +23,38 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E980898A-7D92-4CDC-AE6F-86D205F1E83B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E980898A-7D92-4CDC-AE6F-86D205F1E83B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E980898A-7D92-4CDC-AE6F-86D205F1E83B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E980898A-7D92-4CDC-AE6F-86D205F1E83B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E716AAFB-5023-405C-8F42-59B85BEAEE39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E716AAFB-5023-405C-8F42-59B85BEAEE39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E716AAFB-5023-405C-8F42-59B85BEAEE39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E716AAFB-5023-405C-8F42-59B85BEAEE39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{275487B1-79B5-42E3-A532-C4A89AFCB2BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{275487B1-79B5-42E3-A532-C4A89AFCB2BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{275487B1-79B5-42E3-A532-C4A89AFCB2BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{275487B1-79B5-42E3-A532-C4A89AFCB2BB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DEAF4438-8089-40ED-8175-398E1261D45B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DEAF4438-8089-40ED-8175-398E1261D45B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEAF4438-8089-40ED-8175-398E1261D45B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DEAF4438-8089-40ED-8175-398E1261D45B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B481C8EA-2F3D-48CA-ADA3-BADBA47482DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B481C8EA-2F3D-48CA-ADA3-BADBA47482DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B481C8EA-2F3D-48CA-ADA3-BADBA47482DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B481C8EA-2F3D-48CA-ADA3-BADBA47482DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDB57018-2084-48D9-AD7C-2EE1BAA291EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDB57018-2084-48D9-AD7C-2EE1BAA291EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDB57018-2084-48D9-AD7C-2EE1BAA291EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDB57018-2084-48D9-AD7C-2EE1BAA291EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E980898A-7D92-4CDC-AE6F-86D205F1E83B} = {F4C28770-B7C5-4B22-8E2C-2CBDA6A7ABB8}
+		{E716AAFB-5023-405C-8F42-59B85BEAEE39} = {F4C28770-B7C5-4B22-8E2C-2CBDA6A7ABB8}
+		{DEAF4438-8089-40ED-8175-398E1261D45B} = {F4C28770-B7C5-4B22-8E2C-2CBDA6A7ABB8}
+		{B481C8EA-2F3D-48CA-ADA3-BADBA47482DE} = {F4C28770-B7C5-4B22-8E2C-2CBDA6A7ABB8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {04FA40AF-91D5-4CE8-92ED-7530C8DF0D5E}

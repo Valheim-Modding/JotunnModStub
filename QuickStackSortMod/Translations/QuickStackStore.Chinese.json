@@ -1,0 +1,37 @@
+{
+  "RestockLabelCharacter": "R",
+  "QuickStackLabelCharacter": "Q",
+  "SortLabelCharacter": "S",
+
+  "QuickStackResultMessageNothing": "无需快速堆叠",
+  "QuickStackResultMessageNone": "存入 0 个物品",
+  "QuickStackResultMessageOne": "存入 1 个物品",
+  "QuickStackResultMessageMore": "存入 {0} 个物品",
+
+  "RestockResultMessageNothing": "无需补货",
+  "RestockResultMessageNone": "无法补货 (0/{0})",
+  "RestockResultMessagePartial": "已部分补货 ({0}/{1})",
+  "RestockResultMessageFull": "已补货 (共: {0})",
+
+  "QuickStackLabel": "快速堆叠(Q)",
+  "StoreAllLabel": "全部存进",
+  "SortLabel": "整理(S)",
+  "RestockLabel": "补货(R)",
+  "TrashLabel": "废纸篓",
+
+  "SortByInternalNameLabel": "内部名称",
+  "SortByTranslatedNameLabel": "翻译名称",
+  "SortByValueLabel": "价值",
+  "SortByWeightLabel": "重量",
+  "SortByTypeLabel": "类型",
+
+  "TrashConfirmationOkayButton": "废纸篓",
+  "QuickTrashConfirmation": " 快速丢弃?",
+  "CantTrashFavoritedItemWarning": "不能丢弃收藏的物品!",
+  "CantTrashFlagFavoritedItemWarning": "无法将收藏物品标记为垃圾!",
+  "CantTrashHotkeyBarItemWarning": "设为不允许丢弃在快速热键栏中的项目!",
+  "CantFavoriteTrashFlaggedItemWarning": " 无法收藏被标记为垃圾的项目!",
+
+  "FavoritedItemTooltip": "不会被快速堆叠、分类、存放或丢弃",
+  "TrashFlaggedItemTooltip": "可以快速丢弃"
+}

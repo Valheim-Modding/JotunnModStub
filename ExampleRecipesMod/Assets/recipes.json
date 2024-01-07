@@ -1,0 +1,44 @@
+[
+  {
+    "name": "$custom_item_funkysword",
+    "nameValue": "Funky Sword",
+    "prefabPath":  "Assets/Prefabs/FunkySword.prefab",
+    "item": "FunkySword",
+    "descriptionToken": "$custom_item_funkysword_description",
+    "description": "Funky sword.",
+    "amount": 1,
+    "craftingStation": "piece_workbench",
+    "minStationLevel": 1,
+    "enabled": true,
+    "resources": [
+      {
+        "item": "Wood",
+        "amount": 5,
+        "amountPerLevel": 2
+      },
+      {
+        "item": "Stone",
+        "amount": 5,
+        "amountPerLevel": 2
+      }
+    ]
+  },
+  {
+    "name": "$custom_item_testjam",
+    "nameValue": "Test Jam",
+    "prefabPath": "Assets/Prefabs/TestJam.prefab",
+    "item": "TestJam",
+    "descriptionToken": "$custom_item_testjam_description",
+    "description": "Test jam.",
+    "amount": 5,
+    "craftingStation": "piece_cauldron",
+    "minStationLevel": 1,
+    "enabled": true,
+    "resources": [
+      {
+        "item": "Wood",
+        "amount": 10
+      }
+    ]
+  }
+]

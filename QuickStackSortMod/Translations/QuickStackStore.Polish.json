@@ -1,0 +1,37 @@
+{
+  "RestockLabelCharacter": "R",
+  "QuickStackLabelCharacter": "Q",
+  "SortLabelCharacter": "S",
+
+  "QuickStackResultMessageNothing": "Nie masz nic do przeniesienia",
+  "QuickStackResultMessageNone": "Przeniesiono 0 przedmiotów",
+  "QuickStackResultMessageOne": "Przeniesiono 1 przedmiot",
+  "QuickStackResultMessageMore": "Przeniesiono {0} przedmioty(ów)",
+
+  "RestockResultMessageNothing": "Nic do uzupełnienia",
+  "RestockResultMessageNone": "Nie można uzupełnić (0/{0})",
+  "RestockResultMessagePartial": "Częściowo uzupełnione ({0}/{1})",
+  "RestockResultMessageFull": "Uzupełniono (wszystko: {0})",
+
+  "QuickStackLabel": "Przenieś zgodne",
+  "StoreAllLabel": "Przenieś wszystko",
+  "SortLabel": "Sortuj",
+  "RestockLabel": "Uzupełnij",
+  "TrashLabel": "Zniszcz",
+
+  "SortByInternalNameLabel": "wewn. nazwa",
+  "SortByTranslatedNameLabel": "przetł. nazwa",
+  "SortByValueLabel": "wartość",
+  "SortByWeightLabel": "waga",
+  "SortByTypeLabel": "typ",
+
+  "TrashConfirmationOkayButton": "Zniszcz",
+  "QuickTrashConfirmation": "Zniszczyć przedmiot(y)?",
+  "CantTrashFavoritedItemWarning": "Nie można zniszczyć ulubionego przedmiotu!",
+  "CantTrashFlagFavoritedItemWarning": "Nie można zniszczyć oznaczonego jako ulubiony przedmiotu!",
+  "CantTrashHotkeyBarItemWarning": "Ustawienia blokują niszczenie przedmiotów z paska szybkiego dostępu!",
+  "CantFavoriteTrashFlaggedItemWarning": "Nie można dodać do ulubionych przedmiotu oznaczonego do zniszczenia!",
+
+  "FavoritedItemTooltip": "Ulubione - nie będzie przenoszone, sortowane,\nlub niszczone",
+  "TrashFlaggedItemTooltip": "Może być szybko usunięty"
+}

@@ -1,0 +1,37 @@
+{
+  "RestockLabelCharacter": "R",
+  "QuickStackLabelCharacter": "Q",
+  "SortLabelCharacter": "S",
+
+  "QuickStackResultMessageNothing": "Nothing to quick stack",
+  "QuickStackResultMessageNone": "Stacked 0 items",
+  "QuickStackResultMessageOne": "Stacked 1 item",
+  "QuickStackResultMessageMore": "Stacked {0} items",
+
+  "RestockResultMessageNothing": "Nothing to restock",
+  "RestockResultMessageNone": "Couldn't restock (0/{0})",
+  "RestockResultMessagePartial": "Partially restocked ({0}/{1})",
+  "RestockResultMessageFull": "Fully restocked (total: {0})",
+
+  "QuickStackLabel": "Quick Stack",
+  "StoreAllLabel": "Store All",
+  "SortLabel": "Sort",
+  "RestockLabel": "Restock",
+  "TrashLabel": "Trash",
+
+  "SortByInternalNameLabel": "i. name",
+  "SortByTranslatedNameLabel": "t. name",
+  "SortByValueLabel": "value",
+  "SortByWeightLabel": "weight",
+  "SortByTypeLabel": "type",
+
+  "TrashConfirmationOkayButton": "Trash",
+  "QuickTrashConfirmation": "Quick trash?",
+  "CantTrashFavoritedItemWarning": "Can't trash favorited item!",
+  "CantTrashFlagFavoritedItemWarning": "Can't trash flag a favorited item!",
+  "CantTrashHotkeyBarItemWarning": "Settings disallow trashing of item in hotkey bar!",
+  "CantFavoriteTrashFlaggedItemWarning": "Can't favorite a trash flagged item!",
+
+  "FavoritedItemTooltip": "Will not be quick stacked, sorted,\nstore all'd or trashed",
+  "TrashFlaggedItemTooltip": "Can be quick trashed"
+}
