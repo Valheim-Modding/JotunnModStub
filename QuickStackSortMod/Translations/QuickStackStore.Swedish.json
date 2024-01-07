@@ -1,0 +1,37 @@
+{
+  "RestockLabelCharacter": "F",
+  "QuickStackLabelCharacter": "L",
+  "SortLabelCharacter": "S",
+
+  "QuickStackResultMessageNothing": "Inget att snabblagra",
+  "QuickStackResultMessageNone": "Lagrade 0 saker",
+  "QuickStackResultMessageOne": "Lagrade 1 sak",
+  "QuickStackResultMessageMore": "Lagrade {0} saker",
+
+  "RestockResultMessageNothing": "Inget lager att fylla på",
+  "RestockResultMessageNone": "Kunde inte fylla på lagret (0/{0})",
+  "RestockResultMessagePartial": "Lagret delvis påfyllt ({0}/{1})",
+  "RestockResultMessageFull": "Lagret påfyllt (total: {0})",
+
+  "QuickStackLabel": "Snabblagra",
+  "StoreAllLabel": "Lagra allt",
+  "SortLabel": "Sortera",
+  "RestockLabel": "Fyll på lager",
+  "TrashLabel": "Skräp",
+
+  "SortByInternalNameLabel": "i. namn",
+  "SortByTranslatedNameLabel": "ö. namn",
+  "SortByValueLabel": "värde",
+  "SortByWeightLabel": "vikt",
+  "SortByTypeLabel": "typ",
+
+  "TrashConfirmationOkayButton": "Skräp",
+  "QuickTrashConfirmation": "Snabbskrota?",
+  "CantTrashFavoritedItemWarning": "Kan inte skrota favoritsaker!",
+  "CantTrashFlagFavoritedItemWarning": "Kan inte skräpflagga favoritsaker!",
+  "CantTrashHotkeyBarItemWarning": "Inställningarna tillåter inte skrotande av saker i snabbåtkomstraden!",
+  "CantFavoriteTrashFlaggedItemWarning": "Kan inte favoritmarkera en skräpflaggad sak!",
+
+  "FavoritedItemTooltip": "Kommer inte att snabbsamlas, sorteras,\nlagras eller skrotas",
+  "TrashFlaggedItemTooltip": "Kan snabbskrotas"
+}

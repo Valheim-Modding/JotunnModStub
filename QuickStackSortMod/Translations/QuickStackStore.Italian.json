@@ -1,0 +1,37 @@
+{
+  "RestockLabelCharacter": "R",
+  "QuickStackLabelCharacter": "Q",
+  "SortLabelCharacter": "S",
+
+  "QuickStackResultMessageNothing": "Niente da depositare",
+  "QuickStackResultMessageNone": "Depositato 0 oggetti",
+  "QuickStackResultMessageOne": "Depositato 1 oggetto",
+  "QuickStackResultMessageMore": "Depositati {0} oggetti",
+
+  "RestockResultMessageNothing": "Niente da rifornire",
+  "RestockResultMessageNone": "Impossibile rifornire (0/{0})",
+  "RestockResultMessagePartial": "Parzialmente rifornito ({0}/{1})",
+  "RestockResultMessageFull": "Rifornito totalmente (totale: {0})",
+
+  "QuickStackLabel": "Deposito rapido",
+  "StoreAllLabel": "Deposita tutto",
+  "SortLabel": "Ordina",
+  "RestockLabel": "Rifornisci",
+  "TrashLabel": "Cestino",
+
+  "SortByInternalNameLabel": "i. nome",
+  "SortByTranslatedNameLabel": "t. nome",
+  "SortByValueLabel": "valore",
+  "SortByWeightLabel": "peso",
+  "SortByTypeLabel": "tipo",
+
+  "TrashConfirmationOkayButton": "Cestino",
+  "QuickTrashConfirmation": "Eliminare rapidamente?",
+  "CantTrashFavoritedItemWarning": "Impossibile eliminare oggetto preferito!",
+  "CantTrashFlagFavoritedItemWarning": "Impossibile eliminare un oggeto \nimportato come da eliminare!",
+  "CantTrashHotkeyBarItemWarning": "Le impostazioni impediscono l'eliminazione \ndi oggetti nella barra rapida!",
+  "CantFavoriteTrashFlaggedItemWarning": "Impossibile mettere preferito ad un \noggetto importato come da eliminare!",
+
+  "FavoritedItemTooltip": "Non sarà depositato rapidamente,\nordinato, depositato o eliminato",
+  "TrashFlaggedItemTooltip": "Non può essere cancellato rapidamente"
+}

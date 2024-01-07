@@ -1,0 +1,37 @@
+{
+  "RestockLabelCharacter": "R",
+  "QuickStackLabelCharacter": "Q",
+  "SortLabelCharacter": "S",
+
+  "QuickStackResultMessageNothing": "Отсутствуют предметы для складирования",
+  "QuickStackResultMessageNone": "Сложено 0 штук",
+  "QuickStackResultMessageOne": "Положили 1 штуку",
+  "QuickStackResultMessageMore": "Сложили {0} шт.",
+
+  "RestockResultMessageNothing": "Пополнить запасы нечем",
+  "RestockResultMessageNone": "Не удалось пополнить запасы, (пополнено на: 0/{0})",
+  "RestockResultMessagePartial": "Запасы пополнены частично, (пополнено на: {0}/{1})",
+  "RestockResultMessageFull": "Запасы пополнены полностью  (всего на: {0})",
+
+  "QuickStackLabel": "Складировать",
+  "StoreAllLabel": "Складировать всё",
+  "SortLabel": "Сортировать",
+  "RestockLabel": "Пополнить запасы",
+  "TrashLabel": "Уничтожить",
+
+  "SortByInternalNameLabel": "в.имя",
+  "SortByTranslatedNameLabel": "п.имя",
+  "SortByValueLabel": "цена",
+  "SortByWeightLabel": "вес",
+  "SortByTypeLabel": "вид",
+
+  "TrashConfirmationOkayButton": "Корзина",
+  "QuickTrashConfirmation": "Уничтожить немедленно?",
+  "CantTrashFavoritedItemWarning": "Невозможно удалить избранный предмет!",
+  "CantTrashFlagFavoritedItemWarning": "Избранный предмет невозможно пометить  'в корзину'!",
+  "CantTrashHotkeyBarItemWarning": "Настройки запрещают уничтожение предметов из панели быстрого доступа!",
+  "CantFavoriteTrashFlaggedItemWarning": "Невозможно добавить в избранное предмет, помеченный как мусор!",
+
+  "FavoritedItemTooltip": "По меченый предмет будет защищён от \nскладывать, сортировать, пополнить запасы или уничтожить",
+  "TrashFlaggedItemTooltip": "Возможно быстро уничтожить"
+}

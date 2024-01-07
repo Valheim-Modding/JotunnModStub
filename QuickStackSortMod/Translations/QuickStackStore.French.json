@@ -1,0 +1,37 @@
+{
+  "RestockLabelCharacter": "R",
+  "QuickStackLabelCharacter": "S",
+  "SortLabelCharacter": "T",
+
+  "QuickStackResultMessageNothing": "Rien à stocker",
+  "QuickStackResultMessageNone": "0 objet stocké",
+  "QuickStackResultMessageOne": "1 objet stocké",
+  "QuickStackResultMessageMore": "{0} objets stockés",
+
+  "RestockResultMessageNothing": "Rien à réapprovisionner",
+  "RestockResultMessageNone": "N'a pas pu être réapprovisionné (0/{0})",
+  "RestockResultMessagePartial": "Réapprovisionnement partiel ({0}/{1})",
+  "RestockResultMessageFull": "Complètement réapprovisionné (total: {0})",
+
+  "QuickStackLabel": "Stockage Rapide",
+  "StoreAllLabel": "Tout Stocker",
+  "SortLabel": "Trier",
+  "RestockLabel": "Réapprovisionner",
+  "TrashLabel": "Détruire",
+
+  "SortByInternalNameLabel": "i. nom",
+  "SortByTranslatedNameLabel": "t. nom",
+  "SortByValueLabel": "valeur",
+  "SortByWeightLabel": "poids",
+  "SortByTypeLabel": "type",
+
+  "TrashConfirmationOkayButton": "Détruire",
+  "QuickTrashConfirmation": "Destruction rapide ?",
+  "CantTrashFavoritedItemWarning": "Impossible de détruire un objet favori",
+  "CantTrashFlagFavoritedItemWarning": "Impossible de marquer pour destruction\nun objet favori !",
+  "CantTrashHotkeyBarItemWarning": "Impossible de détruire un objet\ndans la barre de raccourcis",
+  "CantFavoriteTrashFlaggedItemWarning": "Impossible de mettre en favoris\nun objet marqué pour destruction !",
+
+  "FavoritedItemTooltip": "Ne sera pas stocké, trié ou détruit",
+  "TrashFlaggedItemTooltip": "Peut être détruit rapidement"
+}
