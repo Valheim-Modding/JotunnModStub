@@ -77,6 +77,7 @@ Write-Host $msg
 $landed = $Name + " has landed"
 ((Get-Content -path ..\$Name\$Name\$Name.cs -Raw) -replace 'ModStub has landed',$landed) | Set-Content -Path ..\$Name\$Name\$Name.cs 
 ((Get-Content -path ..\$Name\$Name\$Name.csproj -Raw) -replace 'JotunnModStub',$Name) | Set-Content -Path ..\$Name\$Name\$Name.csproj
+((Get-Content -path ..\$Name\$Name\$Name.csproj -Raw) -replace 'JotunnModUnity',$unity) | Set-Content -Path ..\$Name\$Name\$Name.csproj
 ((Get-Content -path ..\$Name\$Name\Properties\AssemblyInfo.cs -Raw) -replace 'JotunnModStub',$Name) | Set-Content -Path ..\$Name\$Name\Properties\AssemblyInfo.cs
 
 
