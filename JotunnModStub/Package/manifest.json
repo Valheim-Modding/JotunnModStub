@@ -5,6 +5,6 @@
   "website_url": "",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.2202",
-    "ValheimModding-Jotunn-2.23.0"
+    "ValheimModding-Jotunn-2.23.2"
   ]
 }
