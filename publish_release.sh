@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DLL=JotunnModStub/bin/Release/JotunnModStub.dll
+DLL=JotunnModStub/bin/Release/net48/JotunnModStub.dll
 PLUGINS=JotunnModStub/Package/plugins
 README=README.md
 #TRANSLATIONS=Translations
