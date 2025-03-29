@@ -44,7 +44,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JotunnLib" Version="2.23.2" />
+    <PackageReference Include="JotunnLib" Version="2.24.3" />
   </ItemGroup>
 
   <PropertyGroup>
