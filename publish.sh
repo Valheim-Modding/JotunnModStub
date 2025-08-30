@@ -27,7 +27,7 @@ while [ "$#" -gt 0 ]; do
         shift 2
         ;;
     --bepinex-path)
-        valheimPath="$2"
+        bepinexPath="$2"
         shift 2
         ;;
     --deploy-path)
@@ -73,7 +73,7 @@ fi
 
 if [ "$target" = "Release" ]; then
     packagePath="$projectPath/Package"
-    mkdir -p $packagePath/plugins
+    mkdir -p "$packagePath/plugins"
     cp "$targetPath/$targetAssembly" "$packagePath/plugins/"
     cp "$projectPath/README.md" "$packagePath/"
 
