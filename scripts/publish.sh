@@ -11,37 +11,21 @@ projectPath="./JotunnModStub"
 while [ "$#" -gt 0 ]; do
   case "$1" in
     --target)
-        target="$2"
-        shift 2
-        ;;
+        target="$2"; shift 2 ;;
     --target-path)
-        targetPath="$2"
-        shift 2
-        ;;
+        targetPath="$2"; shift 2 ;;
     --target-assembly)
-        targetAssembly="$2"
-        shift 2
-        ;;
+        targetAssembly="$2"; shift 2 ;;
     --valheim-path)
-        valheimPath="$2"
-        shift 2
-        ;;
+        valheimPath="$2"; shift 2 ;;
     --bepinex-path)
-        bepinexPath="$2"
-        shift 2
-        ;;
+        bepinexPath="$2"; shift 2 ;;
     --deploy-path)
-        deployPath="$2"
-        shift 2
-        ;;
+        deployPath="$2"; shift 2 ;;
     --project-path)
-        projectPath="$2"
-        shift 2
-        ;;
+        projectPath="$2"; shift 2 ;;
     *)
-        echo "Warning: Unknown argument $1"
-        shift
-        ;;
+        echo "Warning: Unknown argument $1" >&2; shift ;;
   esac
 done
 
@@ -81,7 +65,7 @@ if [ "$target" = "Release" ]; then
         [ -e "$name.zip" ] && rm "$name.zip"
         cd "$packagePath"
         zip -r "../$name.zip" . > /dev/null
-        echo "Build successful, your zip is ready for upload."
+        echo "Build successful, your zip is ready for upload at $(realpath ../$name.zip)."
     else
         echo "Skipping plugin zipping, zip command isn't available."
     fi
