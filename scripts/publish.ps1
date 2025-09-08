@@ -24,7 +24,7 @@ Push-Location -Path (Split-Path -Parent $MyInvocation.MyCommand.Path)
 # Test some preliminaries
 ("$TargetPath",
  "$ValheimPath",
- "$(Get-Location)\libraries"
+ "$(Get-Location)\..\libraries"
 ) | % {
     if (!(Test-Path "$_")) {Write-Error -ErrorAction Stop -Message "$_ folder is missing"}
 }
@@ -36,7 +36,7 @@ $name = "$TargetAssembly" -Replace('.dll')
 $pdb = "$TargetPath\$name.pdb"
 if (Test-Path -Path "$pdb") {
     Write-Host "Create mdb file for plugin $name"
-    Invoke-Expression "& `"$(Get-Location)\libraries\Debug\pdb2mdb.exe`" `"$TargetPath\$TargetAssembly`""
+    Invoke-Expression "& `"$(Get-Location)\..\libraries\Debug\pdb2mdb.exe`" `"$TargetPath\$TargetAssembly`""
 }
 
 # Main Script
