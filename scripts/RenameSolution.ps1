@@ -20,6 +20,7 @@ Write-Host "3. Create the Environment.props file."
 
 
 $modstubpath = Get-Location
+$modstubpath = Split-Path $modstubpath -Parent
 $modstubfoldername = Split-Path -Path $modstubpath -leaf
 Write-Host ""
 
@@ -46,9 +47,9 @@ if ($cmdarg -eq "-nocopy") {
 		Write-Host ""
 
 		#Copy modstub folder
-		Copy-Item ..\$modstubfoldername -Destination "..\$Name" -Recurse 
-		Set-Location ..\$Name
-		Write-Host "Current location set to: (Get-Location)"
+		Copy-Item "..\..\$modstubfoldername" -Destination "..\..\$Name" -Recurse -Exclude @(".vs",".idea",".git")
+		Set-Location "..\..\$Name"
+		Write-Host "Current location set to: $(Get-Location)"
 	}
 }
 
